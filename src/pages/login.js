@@ -1,14 +1,72 @@
 import React, { useState } from "react";
+import { Grid, Paper } from '@material-ui/core'
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+import Avatar from '@material-ui/core/Avatar'
+
+import { FormControl, Input, InputLabel, FormHelperText } from '@material-ui/core'
+
+import { makeStyles } from '@material-ui/core/styles'
+import avatar from '../assets/avatar.png'
+
 import { Redirect } from "react-router-dom";
 import settings from "../config/configData"
+import { relativeTimeRounding } from "moment";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBBtn,
-  MDBInput,
-} from "mdbreact";
+// import {
+//   MDBContainer,
+//   MDBRow,
+//   MDBCol,
+//   MDBBtn,
+//   MDBInput,
+// } from "mdbreact";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: 400,
+    marginTop: '10%'
+  },
+  avatar: {
+    wrapper: {
+      position: 'relative'
+    },
+    root: {
+      display: 'flex',
+      position: 'absolute',
+      right: '50%',
+      '& > *': {
+        margin: theme.spacing(1)
+      }
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7)
+    }
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    background: theme.palette.success.light
+  }
+}))
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -45,46 +103,47 @@ const Login = () => {
       .catch((error) => console.error("Error:", error));
   };
 
+  const classes = useStyles()
+  const bull = <span className={classes.bullet}>•</span>;
+
   return (
-    <MDBContainer>
-      <br></br>
-      <br></br> <br></br>
-      <br></br>
-      {loggedIn ? <Redirect to="/package/" /> : ""}
-      <MDBRow className="d-flex justify-content-start">
-        <MDBCol md="5" className="col-md-4 mx-auto">
+
+    <Grid 
+      container 
+      className={classes.grid}
+      spacing={0}
+      direction="column"
+      alignItems="center"
+    >
+
+      <Grid item xs={12} md={12}>
+
+
+    <Card className={classes.root} xs={12} md={6}>
+      <CardContent>
+        <div className={classes.avatar.wrapper}>
+          <div className={classes.avatar.root}>
+            <Avatar alt="login-avatar" src={avatar} className={classes.avatar.large} />
+          </div>
+
+        </div>
           <form>
-            <p className="h5 text-center mb-4">Sign in</p>
-            <div className="grey-text">
-              <MDBInput
-                label="Type your username"
-                icon="envelope"
-                group
-                // type="email"
-                type="text"
-                validate
-                error="wrong"
-                success="right"
-                onChange={(e) =>
-                  setUsername(e.target.value.toLowerCase().trim())
-                }
-              />
-              <MDBInput
-                label="Type your password"
-                icon="lock"
-                group
-                type="password"
-                validate
-                onChange={e => setPassword(e.target.value.trim())}
-              />
-            </div>
-            <div className="text-center">
-              <MDBBtn onClick={handleSubmit}>Login</MDBBtn>
-            </div>
+            <FormControl>
+              <InputLabel htmlFor="email">Email address</InputLabel>
+              <Input id="email" aria-aria-describedby="email-helper-text" />
+              <FormHelperText id="email-helper-text">Enter your email address</FormHelperText>
+            </FormControl>
           </form>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+      </CardContent>
+      <CardActions>
+        <Button size="small">No account? Signup</Button>
+      </CardActions>
+    </Card>
+      
+      </Grid>
+
+    </Grid>
+  
   );
 };
 export default Login;

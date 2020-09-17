@@ -2,13 +2,14 @@ import React from "react";
 // import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Login from "./pages/login";
+import Layout from './Layout'
+
+import Login from "./pages/Login";
 
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header"></header>
+    <Layout>
       <BrowserRouter>
         {/* <UserContextProvider> */}
           <Switch>
@@ -16,7 +17,7 @@ function App() {
           </Switch>
         {/* </UserContextProvider> */}
       </BrowserRouter>
-    </div>
+    </Layout>
   );
 }
 
