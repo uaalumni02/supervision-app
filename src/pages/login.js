@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Paper, Box, Link } from "@material-ui/core";
+import { Grid, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -128,10 +128,16 @@ const Login = () => {
             </Box>
             <form>
               <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="email">Email address</InputLabel>
-                <Input id="email" aria-aria-describedby="email-helper-text" />
+                <InputLabel htmlFor="username">Username</InputLabel>
+                <Input
+                  id="username"
+                  aria-aria-describedby="email-helper-text"
+                  onChange={(e) =>
+                    setUsername(e.target.value.toLowerCase().trim())
+                  }
+                />
                 <FormHelperText id="email-helper-text">
-                  Enter your email address
+                  Enter your username
                 </FormHelperText>
               </FormControl>
               <FormControl fullWidth margin="dense">
@@ -139,6 +145,7 @@ const Login = () => {
                 <Input
                   id="password"
                   aria-aria-describedby="password-helper-text"
+                  onChange={(e) => setPassword(e.target.value.trim())}
                 />
                 <FormHelperText id="password-helper-text">
                   Enter your password
@@ -150,6 +157,7 @@ const Login = () => {
                   size="large"
                   color="primary"
                   className={classes.form.loginButton}
+                  onClick={handleSubmit}
                 >
                   Login
                 </Button>
