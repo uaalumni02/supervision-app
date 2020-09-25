@@ -165,6 +165,7 @@ const Register = () => {
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  type="password"
                   id="password"
                   aria-aria-describedby="password-helper-text"
                   onChange={(e) => setPassword(e.target.value.trim())}

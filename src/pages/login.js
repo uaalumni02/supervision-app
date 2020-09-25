@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
+import  post  from "../utils/fetch";
+
 import {
   FormControl,
   Input,
@@ -21,7 +23,6 @@ import avatar from "../assets/avatar.png";
 
 import { Redirect } from "react-router-dom";
 import settings from "../config/configData";
-import { relativeTimeRounding } from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,36 +74,12 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [InvalidLogin, setInvalidLogin] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`${settings.apiBaseUrl}/api/user/login`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        if (
-          response.success === false ||
-          response.data.user.role === "standard"
-        ) {
-          setInvalidLogin("Invalid username, password or pending approval");
-        } else {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", response.data.user._id);
-          setLoggedIn(true);
-        }
-      })
-      .catch((error) => console.error("Error:", error));
+
+    const loginResponse = post({ username, password });
+    
   };
 
   const classes = useStyles();
@@ -143,6 +120,7 @@ const Login = () => {
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  type="password"
                   id="password"
                   aria-aria-describedby="password-helper-text"
                   onChange={(e) => setPassword(e.target.value.trim())}
