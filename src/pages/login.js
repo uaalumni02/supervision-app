@@ -9,7 +9,8 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-import  post  from "../utils/fetch";
+import post from "../utils/fetch";
+
 
 import {
   FormControl,
@@ -75,11 +76,11 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const loginResponse = post({ username, password });
-    
+    const url = `${settings.apiBaseUrl}/api/user/login`;
+    const loginResponse = await post(url, { username, password });
   };
 
   const classes = useStyles();

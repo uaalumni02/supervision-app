@@ -1,26 +1,19 @@
 import fetch from "node-fetch";
-import settings from "../config/configData";
+import storeToken from "../utils/localstorage";
 
-
-const post = (body) => {
-  const username = body.username;
-  const password = body.password;
-  fetch(`${settings.apiBaseUrl}/api/user/login`, {
+const post = async (url, body) => {
+  const res = await fetch(url, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  })
-    .then((res) => res.json())
-    .then((response) => {
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", response.data.user._id);
-    })
-    .catch((error) => console.error("Error:", error));
+    body: JSON.stringify(body),
+  });
+  const responseJson = await res.json();
+  if(responseJson) {
+    storeToken(responseJson)
+  }
+  return responseJson;
 };
 
 export default post;
