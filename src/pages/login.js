@@ -9,7 +9,9 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-import post from "../utils/fetch";
+import UserApi from "../helpers/user";
+import LocalStorage from "../utils/localstorage"
+
 
 
 import {
@@ -79,8 +81,12 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const url = `${settings.apiBaseUrl}/api/user/login`;
-    const loginResponse = await post(url, { username, password });
+    const loginResponse = await UserApi.login(username, password)
+    const { token, userId } = loginResponse.userdata
+
+    LocalStorage.save('token', token)
+    LocalStorage.save('user', userId)
+
   };
 
   const classes = useStyles();

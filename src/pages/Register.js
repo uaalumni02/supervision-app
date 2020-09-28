@@ -10,6 +10,9 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
+import UserApi from "../helpers/user";
+import LocalStorage from "../utils/localstorage"
+
 import {
   FormControl,
   Input,
@@ -74,26 +77,15 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    fetch(`${settings.apiBaseUrl}/api/user/`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        firstName,
-        lastName,
-        password,
-        email,
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => console.error("Error:", error));
+
+    const loginResponse = await UserApi.register(username, firstName, lastName, password, email)
+    const { token, userId } = loginResponse.userdata
+
+    LocalStorage.save('token', token)
+    LocalStorage.save('user', userId)
   };
 
   const classes = useStyles();

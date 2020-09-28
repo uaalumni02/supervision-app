@@ -1,6 +1,21 @@
-const storeToken = (response) => {
-  localStorage.setItem("token", response.data.token);
-  localStorage.setItem("user", response.data.user._id);
-};
 
-export default storeToken;
+const save = (key, data) => {
+  localStorage.setItem(key, data);
+}
+
+
+const remove = (key) => {
+  localStorage.removeItem(key);
+}
+
+// const storeToken = (response) => {
+//   console.log(response);
+//   console.log(response)
+//   localStorage.setItem("token", response.userdata.token);
+//   localStorage.setItem("user", response.userdata.userId);
+// };
+
+export default {
+  save,
+  remove,
+}

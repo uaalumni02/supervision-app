@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
-import storeToken from "../utils/localstorage";
 
-const post = async (url, body) => {
+export const post = async (url, body) => {
+
   const res = await fetch(url, {
     method: "post",
     headers: {
@@ -10,10 +10,16 @@ const post = async (url, body) => {
     body: JSON.stringify(body),
   });
   const responseJson = await res.json();
-  if(responseJson) {
-    storeToken(responseJson)
-  }
+  
   return responseJson;
 };
 
-export default post;
+
+
+
+
+
+
+// export default {
+//   post,
+// }
