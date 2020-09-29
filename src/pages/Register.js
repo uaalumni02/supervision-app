@@ -160,10 +160,21 @@ const Register = () => {
                   type="password"
                   id="password"
                   aria-aria-describedby="password-helper-text"
-                  onChange={(e) => setPassword(e.target.value.trim())}
                 />
                 <FormHelperText id="password-helper-text">
                   Enter your password
+                </FormHelperText>
+              </FormControl>
+              <FormControl fullWidth margin="dense">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  type="password"
+                  id="password"
+                  aria-aria-describedby="password-helper-text"
+                  onChange={(e) => setPassword(e.target.value.trim())}
+                />
+                <FormHelperText id="password-helper-text">
+                  Please confirm your password
                 </FormHelperText>
               </FormControl>
               <FormControl margin="normal">

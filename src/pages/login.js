@@ -71,17 +71,27 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#3f51b5",
       color: "#fff",
     },
+    error: {
+      color: 'red'
+    }
   },
 }));
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const loginResponse = await UserApi.login(username, password)
+    console.log(loginResponse)
+
+    if (!loginResponse.success) {
+      setError(loginResponse.message)
+      return false;
+    }
     const { token, userId } = loginResponse.userdata
 
     LocalStorage.save('token', token)
@@ -111,6 +121,7 @@ const Login = () => {
               </div>
             </Box>
             <form>
+
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="username">Username</InputLabel>
                 <Input
@@ -136,6 +147,11 @@ const Login = () => {
                   Enter your password
                 </FormHelperText>
               </FormControl>
+
+              <Box display="flex" alignItems="center" justifyContent="center">
+                  <Typography variant="body2" color="error">{error}</Typography>
+              </Box>
+
               <FormControl margin="normal">
                 <Button
                   variant="contained"
