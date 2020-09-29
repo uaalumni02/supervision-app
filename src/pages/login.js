@@ -86,7 +86,6 @@ const Login = () => {
     event.preventDefault();
 
     const loginResponse = await UserApi.login(username, password)
-    console.log(loginResponse)
 
     if (!loginResponse.success) {
       setError(loginResponse.message)

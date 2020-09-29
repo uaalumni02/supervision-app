@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 import UserApi from "../helpers/user";
-import LocalStorage from "../utils/localstorage"
+import LocalStorage from "../utils/localstorage";
 
 import {
   FormControl,
@@ -74,18 +74,28 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [initialPassword, setInitialPassword] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (initialPassword != password) {
+      setError("Passwords do not match");
+    } else {
+      const loginResponse = await UserApi.register(
+        username,
+        firstName,
+        lastName,
+        password,
+        email
+      );
+      const { token, userId } = loginResponse.userdata;
 
-    const loginResponse = await UserApi.register(username, firstName, lastName, password, email)
-    const { token, userId } = loginResponse.userdata
-
-    LocalStorage.save('token', token)
-    LocalStorage.save('user', userId)
+      LocalStorage.save("token", token);
+      LocalStorage.save("user", userId);
+    }
   };
 
   const classes = useStyles();
@@ -160,6 +170,7 @@ const Register = () => {
                   type="password"
                   id="password"
                   aria-aria-describedby="password-helper-text"
+                  onChange={(e) => setInitialPassword(e.target.value.trim())}
                 />
                 <FormHelperText id="password-helper-text">
                   Enter your password
@@ -177,6 +188,13 @@ const Register = () => {
                   Please confirm your password
                 </FormHelperText>
               </FormControl>
+
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2" color="error">
+                  {error}
+                </Typography>
+              </Box>
+
               <FormControl margin="normal">
                 <Button
                   variant="contained"
