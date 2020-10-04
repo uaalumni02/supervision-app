@@ -10,9 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
 import UserApi from "../helpers/user";
-import LocalStorage from "../utils/localstorage"
-
-
+import LocalStorage from "../utils/localstorage";
 
 import {
   FormControl,
@@ -29,8 +27,8 @@ import settings from "../config/configData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 400,
-    marginTop: "10%",
+    minWidth: 370,
+    marginTop: "40%",
   },
   avatar: {
     wrapper: {
@@ -72,7 +70,15 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
     error: {
-      color: 'red'
+      color: "red",
+    },
+
+    titleHolder: {
+      marginTop: '15px',
+    },
+    title: {
+      fontWeight: 300,
+      color: 'red',
     }
   },
 }));
@@ -80,22 +86,21 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const loginResponse = await UserApi.login(username, password)
+    const loginResponse = await UserApi.login(username, password);
 
     if (!loginResponse.success) {
-      setError(loginResponse.message)
+      setError(loginResponse.message);
       return false;
     }
-    const { token, userId } = loginResponse.userdata
+    const { token, userId } = loginResponse.userdata;
 
-    LocalStorage.save('token', token)
-    LocalStorage.save('user', userId)
-
+    LocalStorage.save("token", token);
+    LocalStorage.save("user", userId);
   };
 
   const classes = useStyles();
@@ -119,8 +124,10 @@ const Login = () => {
                 </div>
               </div>
             </Box>
+            <Box display="flex" alignItems="center" justifyContent="center" mt={2} fontWeight={300} fontSize="h5.fontSize">
+              <Typography variant="span" >User Login</Typography>
+            </Box>
             <form>
-
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="username">Username</InputLabel>
                 <Input
@@ -148,7 +155,9 @@ const Login = () => {
               </FormControl>
 
               <Box display="flex" alignItems="center" justifyContent="center">
-                  <Typography variant="body2" color="error">{error}</Typography>
+                <Typography variant="body2" color="error">
+                  {error}
+                </Typography>
               </Box>
 
               <FormControl margin="normal">

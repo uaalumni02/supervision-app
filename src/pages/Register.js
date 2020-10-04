@@ -109,7 +109,7 @@ const Register = () => {
       direction="column"
       alignItems="center"
     >
-      <Grid item xs={12} md={12}>
+      <Grid item xs={4} md={4}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
             <Box display="flex" alignItems="center" justifyContent="center">
@@ -118,6 +118,9 @@ const Register = () => {
                   <Avatar alt="login-avatar" src={avatar} size={50} />
                 </div>
               </div>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="center" mt={2} fontWeight={300} fontSize="h5.fontSize">
+              <Typography variant="span" >Register User</Typography>
             </Box>
             <form>
               <FormControl fullWidth margin="dense">
