@@ -10,7 +10,7 @@ export const post = async (url, body) => {
     body: JSON.stringify(body),
   });
   const responseJson = await res.json();
-  
+  console.log(responseJson)
   return responseJson;
 };
 
@@ -19,7 +19,3 @@ export const post = async (url, body) => {
 
 
 
-
-// export default {
-//   post,
-// }

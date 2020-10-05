@@ -11,12 +11,13 @@ const login = async (username, password) => {
   return response;
 };
 
-const register = async (username, firstName, lastName, password, email) => {
+const register = async (username, firstName, lastName, confirmPassword, password, email) => {
   const apiUrl = makeApiUrl("/");
   const response = await post(apiUrl, {
     username,
     firstName,
     lastName,
+    confirmPassword,
     password,
     email,
   });

@@ -74,28 +74,32 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [initialPassword, setInitialPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (initialPassword != password) {
-      setError("Passwords do not match");
-    } else {
-      const loginResponse = await UserApi.register(
-        username,
-        firstName,
-        lastName,
-        password,
-        email
-      );
-      const { token, userId } = loginResponse.userdata;
 
-      LocalStorage.save("token", token);
-      LocalStorage.save("user", userId);
+    const registerResponse = await UserApi.register(
+      username,
+      firstName,
+      lastName,
+      confirmPassword,
+      password,
+      email
+    );
+
+    if (!registerResponse.success) {
+      setError(registerResponse.message);
+      return false;
     }
+
+    const { token, userId } = registerResponse.userdata;
+
+    LocalStorage.save("token", token);
+    LocalStorage.save("user", userId);
   };
 
   const classes = useStyles();
@@ -119,8 +123,15 @@ const Register = () => {
                 </div>
               </div>
             </Box>
-            <Box display="flex" alignItems="center" justifyContent="center" mt={2} fontWeight={300} fontSize="h5.fontSize">
-              <Typography variant="span" >Register User</Typography>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              mt={2}
+              fontWeight={300}
+              fontSize="h5.fontSize"
+            >
+              <Typography variant="span">Register User</Typography>
             </Box>
             <form>
               <FormControl fullWidth margin="dense">
@@ -173,7 +184,7 @@ const Register = () => {
                   type="password"
                   id="password"
                   aria-aria-describedby="password-helper-text"
-                  onChange={(e) => setInitialPassword(e.target.value.trim())}
+                  onChange={(e) => setPassword(e.target.value.trim())}
                 />
                 <FormHelperText id="password-helper-text">
                   Enter your password
@@ -183,9 +194,9 @@ const Register = () => {
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                   type="password"
-                  id="password"
+                  id="confirmPassword"
                   aria-aria-describedby="password-helper-text"
-                  onChange={(e) => setPassword(e.target.value.trim())}
+                  onChange={(e) => setConfirmPassword(e.target.value.trim())}
                 />
                 <FormHelperText id="password-helper-text">
                   Please confirm your password
