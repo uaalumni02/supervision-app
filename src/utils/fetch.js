@@ -14,6 +14,10 @@ export const post = async (url, body) => {
   return responseJson;
 };
 
+export const get = async (url, headers) => {
+ //finish here
+}
+
 
 
 

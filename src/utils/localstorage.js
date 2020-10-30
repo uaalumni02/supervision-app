@@ -8,6 +8,11 @@ const remove = (key) => {
   localStorage.removeItem(key);
 }
 
+const get = (key) => {
+  const value = localStorage.getItem(key)
+  return value
+}
+
 // const storeToken = (response) => {
 //   console.log(response);
 //   console.log(response)
@@ -16,6 +21,7 @@ const remove = (key) => {
 // };
 
 export default {
+  get,
   save,
   remove,
 }

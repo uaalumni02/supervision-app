@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Grid, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
@@ -11,6 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 import UserApi from "../helpers/user";
 import LocalStorage from "../utils/localstorage";
+import Context from "../store/context"
 
 import {
   FormControl,
@@ -22,7 +23,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import settings from "../config/configData";
 
 const useStyles = makeStyles((theme) => ({
@@ -87,6 +88,17 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  let history = useHistory();
+
+  useEffect(() => {
+    if (globalState.isLoggedIn) {
+      const userId = LocalStorage.get("user");
+      globalDispatch({ type: 'SET_LOGGEDIN_USER', payload: userId})
+      history.push('/supervision')
+    }
+  }, [])
+
+  const { globalState, globalDispatch} = useContext(Context)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -101,6 +113,9 @@ const Login = () => {
 
     LocalStorage.save("token", token);
     LocalStorage.save("user", userId);
+    globalDispatch({ type: 'SET_LOGGEDIN_USER', payload: userId})
+    history.push('/supervision')
+
   };
 
   const classes = useStyles();

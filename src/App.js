@@ -1,24 +1,29 @@
 import React from "react";
-// import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Layout from './Layout'
+import Layout from "./Layout";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Supervision from "./pages/Supervision";
+
+import GlobalStateProvider from "./store/GlobalStateProvider";
 
 function App() {
   return (
-    <Layout>
-      <BrowserRouter>
-        {/* <UserContextProvider> */}
+    <GlobalStateProvider>
+      <Layout>
+        <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/supervision" component={Supervision} />
           </Switch>
-        {/* </UserContextProvider> */}
-      </BrowserRouter>
-    </Layout>
+          {/* <UserContextProvider> */}
+          {/* </UserContextProvider> */}
+        </BrowserRouter>
+      </Layout>
+    </GlobalStateProvider>
   );
 }
 
