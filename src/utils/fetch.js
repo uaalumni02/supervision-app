@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 
 export const post = async (url, body) => {
-
   const res = await fetch(url, {
     method: "post",
     headers: {
@@ -10,16 +9,20 @@ export const post = async (url, body) => {
     body: JSON.stringify(body),
   });
   const responseJson = await res.json();
-  console.log(responseJson)
   return responseJson;
 };
 
 export const get = async (url, headers) => {
- //finish here
-}
-
-
-
-
-
+  //finish here
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const res = await fetch(url, {
+    method: "get",
+    headers: {
+      Authorization: bearer,
+    },
+  });
+  const responseJson = await res.json();
+  return responseJson;
+};
 

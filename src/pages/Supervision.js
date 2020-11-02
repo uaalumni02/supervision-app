@@ -10,9 +10,6 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 import Avatar from "@material-ui/core/Avatar";
 
-import UserApi from "../helpers/user";
-import LocalStorage from "../utils/localstorage";
-
 import {
   FormControl,
   Input,
@@ -24,7 +21,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
 import { Redirect, useHistory } from "react-router-dom";
-import settings from "../config/configData";
+
+import UserApi from "../helpers/user";
+import LocalStorage from "../utils/localstorage";
 import Context from "../store/context";
 
 const useStyles = makeStyles((theme) => ({
@@ -88,17 +87,22 @@ const Supervision = () => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
-  const { globalState, globalDispatch } = useContext(Context)
-  
+  const { globalState, globalDispatch } = useContext(Context);
+
   let history = useHistory();
 
   useEffect(() => {
     if (!globalState.isLoggedIn) {
-      history.push('/')
+      history.push("/");
     } else {
-      // fetch their supervision data
+      fetchMeetingData();
     }
-  }, [])
+  }, []);
+  
+  const fetchMeetingData = async (event) => {
+    const loginResponse = await UserApi.supervision(globalState.userId);
+    console.log(loginResponse);
+  };
 
   return (
     <Grid
@@ -131,18 +135,18 @@ const Supervision = () => {
             </Box>
           </CardContent>
           <form>
-          <FormControl fullWidth margin="dense">
-            <TextareaAutosize
-              className={classes.root}
-              rowsMax={4}
-              aria-label="maximum height"
-              placeholder="Enter Session Information"
-            />
+            <FormControl fullWidth margin="dense">
+              <TextareaAutosize
+                className={classes.root}
+                rowsMax={4}
+                aria-label="maximum height"
+                placeholder="Enter Session Information"
+              />
             </FormControl>
             <FormControl margin="normal">
-            <Button variant="contained" size="large" color="primary">
-              Submit
-            </Button>
+              <Button variant="contained" size="large" color="primary">
+                Submit
+              </Button>
             </FormControl>
           </form>
         </Card>

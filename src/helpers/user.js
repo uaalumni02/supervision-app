@@ -1,8 +1,12 @@
-import { post } from "../utils/fetch";
+import { post, get } from "../utils/fetch";
 import settings from "../config/configData";
 
 const makeApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/user${path}`;
+};
+
+const supervisionApiUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/meeting${path}`;
 };
 
 const login = async (username, password) => {
@@ -24,9 +28,17 @@ const register = async (username, firstName, lastName, confirmPassword, password
   return response;
 };
 
+const supervision = async (user) => {
+  console.log(user)
+  const apiUrl = supervisionApiUrl("/" + user);
+  const response = await get(apiUrl);
+  return response;
+};
+
 export default {
   login,
   register,
+  supervision
 };
 
 

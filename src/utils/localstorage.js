@@ -13,13 +13,6 @@ const get = (key) => {
   return value
 }
 
-// const storeToken = (response) => {
-//   console.log(response);
-//   console.log(response)
-//   localStorage.setItem("token", response.userdata.token);
-//   localStorage.setItem("user", response.userdata.userId);
-// };
-
 export default {
   get,
   save,
