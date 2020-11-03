@@ -10,7 +10,8 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-import UserApi from "../helpers/user";
+// import UserApi from "../helpers/user";
+import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 
 import {
@@ -82,7 +83,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const registerResponse = await UserApi.register(
+    const registerResponse = await Api.register(
       username,
       firstName,
       lastName,

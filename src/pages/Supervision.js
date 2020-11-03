@@ -22,7 +22,8 @@ import avatar from "../assets/avatar.png";
 
 import { Redirect, useHistory } from "react-router-dom";
 
-import UserApi from "../helpers/user";
+// import UserApi from "../helpers/user";
+import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 import Context from "../store/context";
 
@@ -100,8 +101,8 @@ const Supervision = () => {
   }, []);
   
   const fetchMeetingData = async (event) => {
-    const loginResponse = await UserApi.supervision(globalState.userId);
-    console.log(loginResponse);
+    const meetingResponse = await Api.supervision(globalState.userId);
+    console.log(meetingResponse);
   };
 
   return (

@@ -12,15 +12,12 @@ export const post = async (url, body) => {
   return responseJson;
 };
 
-export const get = async (url, headers) => {
-  //finish here
-  const token = localStorage.getItem("token");
-  const bearer = "Bearer " + token;
+
+
+export const get = async (url, headers = {}) => {
   const res = await fetch(url, {
     method: "get",
-    headers: {
-      Authorization: bearer,
-    },
+    headers,
   });
   const responseJson = await res.json();
   return responseJson;
