@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-// import UserApi from "../helpers/user";
 import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 
@@ -82,16 +81,23 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const registerResponse = await Api.register(
-      username,
-      firstName,
-      lastName,
+    const user = { username, firstName,lastName,
       confirmPassword,
       password,
-      email
+      email  }
+    // register(user)
+    //dont have to type it all out...put in an object instead and pass the object 
+    //i think the problem is that im passing a object versus a string value
+    const registerResponse = await Api.register(
+      // username,
+      // firstName,
+      // lastName,
+      // confirmPassword,
+      // password,
+      // email
+      user
     );
-
+    
     if (!registerResponse.success) {
       setError(registerResponse.message);
       return false;

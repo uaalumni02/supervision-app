@@ -22,7 +22,6 @@ import avatar from "../assets/avatar.png";
 
 import { Redirect, useHistory } from "react-router-dom";
 
-// import UserApi from "../helpers/user";
 import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 import Context from "../store/context";
@@ -102,10 +101,14 @@ const Supervision = () => {
   
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
+//put response in a divs and display. can make pretty later; will have to use map
+//need to check if value does not exist see above
+//look into reset password
     console.log(meetingResponse);
   };
 
   return (
+
     <Grid
       container
       className={classes.grid}
@@ -113,6 +116,15 @@ const Supervision = () => {
       direction="column"
       alignItems="center"
     >
+
+      {/* {globalState.supervisions && (
+        globalState.ma
+      )}
+
+      {globalState.supervisions ? (
+          ////map hereRunning the map
+      ) : null
+      } */}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
