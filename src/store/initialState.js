@@ -1,8 +1,9 @@
-import isLoggedIn from "../utils/isLoggedIn"
+import isLoggedIn, { getUserId } from "../utils/isLoggedIn"
+
 
 const initialState = {
     isLoggedIn: isLoggedIn(),
-    userId: null, 
+    userId: getUserId(), 
     user: null, 
     supervisions: null,
 }

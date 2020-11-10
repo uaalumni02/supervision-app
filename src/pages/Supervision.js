@@ -98,17 +98,18 @@ const Supervision = () => {
       fetchMeetingData();
     }
   }, []);
-  
+
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
-//put response in a divs and display. can make pretty later; will have to use map
-//need to check if value does not exist see above
-//look into reset password
-    console.log(meetingResponse);
+    //look into reset password
+    const supervisions = meetingResponse;
+    globalDispatch({
+      type: "SET_SUPERVISION_DATA",
+      payload: supervisions.data,
+    });
   };
 
   return (
-
     <Grid
       container
       className={classes.grid}
@@ -116,15 +117,6 @@ const Supervision = () => {
       direction="column"
       alignItems="center"
     >
-
-      {/* {globalState.supervisions && (
-        globalState.ma
-      )}
-
-      {globalState.supervisions ? (
-          ////map hereRunning the map
-      ) : null
-      } */}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
@@ -143,6 +135,17 @@ const Supervision = () => {
               fontWeight={300}
               fontSize="h5.fontSize"
             >
+              {globalState.supervisions &&
+                globalState.supervisions.map((meetingData) => (
+                  <h6>
+                    {meetingData.content}
+                    <br></br>
+                    {meetingData.numberOfAttendees}
+                    <br></br>
+                    {meetingData.supervisionType.supervisionType}
+                  </h6>
+                ))}
+
               <h1>{globalState.userId}</h1>
               <Typography variant="span">Session Information</Typography>
             </Box>

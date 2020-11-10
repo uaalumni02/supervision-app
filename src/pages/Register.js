@@ -81,23 +81,16 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = { username, firstName,lastName,
+    const user = {
+      username,
+      firstName,
+      lastName,
       confirmPassword,
       password,
-      email  }
-    // register(user)
-    //dont have to type it all out...put in an object instead and pass the object 
-    //i think the problem is that im passing a object versus a string value
-    const registerResponse = await Api.register(
-      // username,
-      // firstName,
-      // lastName,
-      // confirmPassword,
-      // password,
-      // email
-      user
-    );
-    
+      email,
+    };
+    const registerResponse = await Api.register(user);
+
     if (!registerResponse.success) {
       setError(registerResponse.message);
       return false;
