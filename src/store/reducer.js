@@ -11,6 +11,14 @@ const reducer = (state, action) => {
         ...state,
         supervisions: action.payload,
       };
+    case "LOGOUT":
+      return {
+        ...state,
+        isLoggedIn: false,
+        userId: null,
+        user: null,
+        supervisions: null,
+      };
     default:
       return state;
   }

@@ -9,14 +9,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import  logOut from "../../../utils/logOut";
-
 import Context from "../../../store/context";
-
-// const logOut = () => {
-//     localStorage.removeItem("user");
-//     localStorage.removeItem("token");
-//   }
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -34,6 +27,13 @@ const useStyles = makeStyles((theme) =>
 
 const Header = () => {
   const { globalState, globalDispatch } = useContext(Context);
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    globalDispatch({
+      type: "LOGOUT",
+    });
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -52,9 +52,9 @@ const Header = () => {
           </Typography>
           {!globalState.isLoggedIn && <a href="#">Login</a>}
           {globalState.isLoggedIn && (
-            <button onClick={logOut} href="#">
+            <a onClick={handleLogout} href="#">
               Log Out
-            </button>
+            </a>
           )}
         </Toolbar>
       </AppBar>
