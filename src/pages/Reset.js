@@ -87,15 +87,23 @@ const useStyles = makeStyles((theme) => ({
 
 const Reset = () => {
   const [email, setEmail] = useState("");
-  
+  const [error, setError] = useState("");
+  const [responseSuccess, setResponseSuccess] = useState("");
 
-//   const { globalState, globalDispatch } = useContext(Context);
+  //   const { globalState, globalDispatch } = useContext(Context);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const resetResponse = await Api.reset(email);
-console.log(resetResponse)
+    console.log(resetResponse);
+    if (!resetResponse.success) {
+      setError(resetResponse.message);
+      return false;
+    } else {
+      setResponseSuccess(resetResponse.message);
+      return true;
+    }
   };
 
   const classes = useStyles();
@@ -135,15 +143,18 @@ console.log(resetResponse)
                 <Input
                   id="email"
                   aria-aria-describedby="email-helper-text"
-                  onChange={(e) =>
-                    setEmail(e.target.value)
-                  }
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <FormHelperText id="email-helper-text">
                   Enter your email
                 </FormHelperText>
               </FormControl>
-
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2" color="error">
+                  {error}
+                  {responseSuccess}
+                </Typography>
+              </Box>
               <FormControl margin="normal">
                 <Button
                   variant="contained"
