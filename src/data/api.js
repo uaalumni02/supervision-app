@@ -1,5 +1,3 @@
-
-
 import { post, get } from "../utils/fetch";
 import settings from "../config/configData";
 
@@ -9,6 +7,9 @@ const makeApiUrl = (path) => {
 
 const supervisionApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/meeting${path}`;
+};
+const resetApiUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/reset`;
 };
 
 const login = async (username, password) => {
@@ -20,7 +21,7 @@ const login = async (username, password) => {
 const register = async (user) => {
   const apiUrl = makeApiUrl("/");
   const response = await post(apiUrl, {
-   ...user
+    ...user,
   });
 
   return response;
@@ -29,15 +30,20 @@ const register = async (user) => {
 const supervision = async (user) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  const headers = { Authorization: bearer }
+  const headers = { Authorization: bearer };
   const apiUrl = supervisionApiUrl("/" + user);
   const response = await get(apiUrl, headers);
+  return response;
+};
+const reset = async (email) => {
+  const apiUrl = resetApiUrl("/");
+  const response = await post(apiUrl, { email });
   return response;
 };
 
 export default {
   login,
   register,
-  supervision
+  supervision,
+  reset,
 };
-

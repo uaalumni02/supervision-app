@@ -11,8 +11,8 @@ import Avatar from "@material-ui/core/Avatar";
 
 // import UserApi from "../helpers/user";
 import Api from "../data/api";
-import LocalStorage from "../utils/localstorage";
-import Context from "../store/context";
+// import LocalStorage from "../utils/localstorage";
+// import Context from "../store/context";
 
 import {
   FormControl,
@@ -24,8 +24,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
-import { Redirect, useHistory } from "react-router-dom";
-import settings from "../config/configData";
+// import { Redirect, useHistory } from "react-router-dom";
+// import settings from "../config/configData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,37 +85,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  let history = useHistory();
+const Reset = () => {
+  const [email, setEmail] = useState("");
+  
 
-  useEffect(() => {
-    if (globalState.isLoggedIn) {
-      const userId = LocalStorage.get("user");
-      globalDispatch({ type: "SET_LOGGEDIN_USER", payload: userId });
-      history.push("/supervision");
-    }
-  }, []);
-
-  const { globalState, globalDispatch } = useContext(Context);
+//   const { globalState, globalDispatch } = useContext(Context);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const loginResponse = await Api.login(username, password);
-
-    if (!loginResponse.success) {
-      setError(loginResponse.message);
-      return false;
-    }
-    const { token, userId } = loginResponse.userdata;
-
-    LocalStorage.save("token", token);
-    LocalStorage.save("user", userId);
-    globalDispatch({ type: "SET_LOGGEDIN_USER", payload: userId });
-    history.push("/supervision");
+    const resetResponse = await Api.reset(email);
+console.log(resetResponse)
   };
 
   const classes = useStyles();
@@ -147,40 +127,22 @@ const Login = () => {
               fontWeight={300}
               fontSize="h5.fontSize"
             >
-              <Typography variant="span">User Login</Typography>
+              <Typography variant="span">Reset Password</Typography>
             </Box>
             <form>
               <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="username">Username</InputLabel>
+                <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
-                  id="username"
+                  id="email"
                   aria-aria-describedby="email-helper-text"
                   onChange={(e) =>
-                    setUsername(e.target.value.toLowerCase().trim())
+                    setEmail(e.target.value)
                   }
                 />
                 <FormHelperText id="email-helper-text">
-                  Enter your username
+                  Enter your email
                 </FormHelperText>
               </FormControl>
-              <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  type="password"
-                  id="password"
-                  aria-aria-describedby="password-helper-text"
-                  onChange={(e) => setPassword(e.target.value.trim())}
-                />
-                <FormHelperText id="password-helper-text">
-                  Enter your password
-                </FormHelperText>
-              </FormControl>
-
-              <Box display="flex" alignItems="center" justifyContent="center">
-                <Typography variant="body2" color="error">
-                  {error}
-                </Typography>
-              </Box>
 
               <FormControl margin="normal">
                 <Button
@@ -190,28 +152,14 @@ const Login = () => {
                   className={classes.form.loginButton}
                   onClick={handleSubmit}
                 >
-                  Login
+                  Reset
                 </Button>
               </FormControl>
             </form>
           </CardContent>
-          <CardActions>
-            <Typography>
-              <Link href="/register" color="inherit">
-                No Account? Sign up
-              </Link>
-            </Typography>
-          </CardActions>
-          <CardActions>
-            <Typography>
-              <Link href="/reset" color="inherit">
-                Forgot Password? Reset
-              </Link>
-            </Typography>
-          </CardActions>
         </Card>
       </Grid>
     </Grid>
   );
 };
-export default Login;
+export default Reset;

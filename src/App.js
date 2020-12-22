@@ -6,6 +6,7 @@ import Layout from "./Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Supervision from "./pages/Supervision";
+import Reset from "./pages/Reset";
 
 import GlobalStateProvider from "./store/GlobalStateProvider";
 
@@ -18,6 +19,7 @@ function App() {
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/supervision" component={Supervision} />
+            <Route exact path="/reset" component={Reset} />
           </Switch>
           {/* <UserContextProvider> */}
           {/* </UserContextProvider> */}

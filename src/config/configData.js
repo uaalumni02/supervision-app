@@ -5,7 +5,7 @@ const settings = {
     },
     production: {
       api_key: "prodkey",
-      apiBaseUrl: "https://tz-package-manager.herokuapp.com"
+      apiBaseUrl: "https://supervision-tracker.herokuapp.com/"
     }
   };
   
