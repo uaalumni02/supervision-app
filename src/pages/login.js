@@ -204,7 +204,7 @@ const Login = () => {
           </CardActions>
           <CardActions>
             <Typography>
-              <Link href="/reset" color="inherit">
+              <Link href="/requestToken" color="inherit">
                 Forgot Password? Reset
               </Link>
             </Typography>

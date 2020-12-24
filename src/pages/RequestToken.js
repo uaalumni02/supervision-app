@@ -139,35 +139,29 @@ const RequestToken = () => {
             </Box>
             <form>
               <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="password">Password</InputLabel>
+                <InputLabel htmlFor="email">Email</InputLabel>
                 <Input
-                  id="password"
+                  id="email"
                   aria-aria-describedby="email-helper-text"
-                //   onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <FormHelperText id="email-helper-text">
-                  Enter your password
+                  Enter your email
                 </FormHelperText>
               </FormControl>
-              <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="password">Confirm Password</InputLabel>
-                <Input
-                  id="password"
-                  aria-aria-describedby="email-helper-text"
-                //   onChange={(e) => setEmail(e.target.value)}
-                />
-                <FormHelperText id="email-helper-text">
-                  Confirm password
-                </FormHelperText>
-              </FormControl>
-              
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2" color="error">
+                  {error}
+                  {responseSuccess}
+                </Typography>
+              </Box>
               <FormControl margin="normal">
                 <Button
                   variant="contained"
                   size="large"
                   color="primary"
                   className={classes.form.loginButton}
-                //   onClick={handleSubmit}
+                  onClick={handleSubmit}
                 >
                   Reset
                 </Button>
