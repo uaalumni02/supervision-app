@@ -95,8 +95,7 @@ const RequestToken = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const resetResponse = await Api.reset(email);
-    console.log(resetResponse);
+    const resetResponse = await Api.resetToken(email);
     if (!resetResponse.success) {
       setError(resetResponse.message);
       return false;

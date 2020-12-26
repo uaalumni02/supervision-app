@@ -85,25 +85,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RequestToken = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [responseSuccess, setResponseSuccess] = useState("");
+const UpdatePassword = () => {
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
 
   //   const { globalState, globalDispatch } = useContext(Context);
 
   const handleSubmit = async (event) => {
+    const url = window.location.pathname;
+    const id = url.substring(url.lastIndexOf("/") + 1);
     event.preventDefault();
+    const passwordData = {
+      confirmPassword,
+      password,
+    };
 
-    const resetResponse = await Api.reset(email);
-    console.log(resetResponse);
-    if (!resetResponse.success) {
-      setError(resetResponse.message);
-      return false;
-    } else {
-      setResponseSuccess(resetResponse.message);
-      return true;
-    }
+    const reset = await Api.resetPassword(passwordData, id);
+    console.log(reset);
   };
 
   const classes = useStyles();
@@ -141,33 +139,37 @@ const RequestToken = () => {
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  type="password"
                   id="password"
                   aria-aria-describedby="email-helper-text"
-                //   onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <FormHelperText id="email-helper-text">
-                  Enter your password
+                  Enter your new password
                 </FormHelperText>
               </FormControl>
               <FormControl fullWidth margin="dense">
-                <InputLabel htmlFor="password">Confirm Password</InputLabel>
+                <InputLabel htmlFor="confirmPassword">
+                  Confirm Password
+                </InputLabel>
                 <Input
-                  id="password"
+                  type="password"
+                  id="confirmPassword"
                   aria-aria-describedby="email-helper-text"
-                //   onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <FormHelperText id="email-helper-text">
                   Confirm password
                 </FormHelperText>
               </FormControl>
-              
+
               <FormControl margin="normal">
                 <Button
                   variant="contained"
                   size="large"
                   color="primary"
                   className={classes.form.loginButton}
-                //   onClick={handleSubmit}
+                  onClick={handleSubmit}
                 >
                   Reset
                 </Button>
@@ -179,4 +181,4 @@ const RequestToken = () => {
     </Grid>
   );
 };
-export default RequestToken;
+export default UpdatePassword;

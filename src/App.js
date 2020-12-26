@@ -21,7 +21,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/supervision" component={Supervision} />
             <Route exact path="/requestToken" component={RequestToken} />
-            <Route exact path="/reset" component={Reset} />
+            <Route exact path="/reset/:id" component={Reset} />
           </Switch>
           {/* <UserContextProvider> */}
           {/* </UserContextProvider> */}

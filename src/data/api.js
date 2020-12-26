@@ -12,6 +12,10 @@ const resetApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/reset`;
 };
 
+const resetPasswordApiUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/updatePassword${path}`;
+};
+
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
   const response = await post(apiUrl, { username, password });
@@ -35,9 +39,15 @@ const supervision = async (user) => {
   const response = await get(apiUrl, headers);
   return response;
 };
-const reset = async (email) => {
+const resetToken = async (email) => {
   const apiUrl = resetApiUrl("/");
   const response = await post(apiUrl, { email });
+  return response;
+};
+const resetPassword = async (passwordData, id) => {
+  console.log(passwordData);
+  const apiUrl = resetPasswordApiUrl("/" + id);
+  const response = await post(apiUrl, { ...passwordData });
   return response;
 };
 
@@ -45,5 +55,6 @@ export default {
   login,
   register,
   supervision,
-  reset,
+  resetToken,
+  resetPassword,
 };
