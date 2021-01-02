@@ -45,7 +45,6 @@ const resetToken = async (email) => {
   return response;
 };
 const resetPassword = async (passwordData, id) => {
-  console.log(passwordData);
   const apiUrl = resetPasswordApiUrl("/" + id);
   const response = await post(apiUrl, { ...passwordData });
   return response;

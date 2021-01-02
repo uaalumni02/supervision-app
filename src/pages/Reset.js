@@ -88,6 +88,8 @@ const useStyles = makeStyles((theme) => ({
 const UpdatePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [responseSuccess, setResponseSuccess] = useState("");
 
   //   const { globalState, globalDispatch } = useContext(Context);
 
@@ -102,6 +104,20 @@ const UpdatePassword = () => {
 
     const reset = await Api.resetPassword(passwordData, id);
     console.log(reset);
+    // if (reset.success) {
+    //   setResponseSuccess(reset.message);
+    //   return true;
+    // } else {
+    //   setError(reset.message);
+    //   return false;
+    // }
+    if (!reset.success) {
+      setError(reset.message);
+      return false;
+    } else {
+      setResponseSuccess(reset.message);
+      return true;
+    }
   };
 
   const classes = useStyles();
@@ -139,6 +155,7 @@ const UpdatePassword = () => {
               <FormControl fullWidth margin="dense">
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
+                  required
                   type="password"
                   id="password"
                   aria-aria-describedby="email-helper-text"
@@ -162,6 +179,12 @@ const UpdatePassword = () => {
                   Confirm password
                 </FormHelperText>
               </FormControl>
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2" color="error">
+                  {error}
+                  {responseSuccess}
+                </Typography>
+              </Box>
 
               <FormControl margin="normal">
                 <Button
@@ -175,6 +198,11 @@ const UpdatePassword = () => {
                 </Button>
               </FormControl>
             </form>
+            <Typography>
+              <Link href="/" color="inherit">
+                Return to Login
+              </Link>
+            </Typography>
           </CardContent>
         </Card>
       </Grid>
