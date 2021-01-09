@@ -101,7 +101,7 @@ const Supervision = () => {
 
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
-    //look into reset password
+console.log(meetingResponse)
     const supervisions = meetingResponse;
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
@@ -135,16 +135,16 @@ const Supervision = () => {
               fontWeight={300}
               fontSize="h5.fontSize"
             >
-              {globalState.supervisions &&
+                {globalState.supervisions &&
                 globalState.supervisions.map((meetingData) => (
                   <h6>
                     {meetingData.content}
                     <br></br>
                     {meetingData.numberOfAttendees}
                     <br></br>
-                    {meetingData.supervisionType.supervisionType}
+                     {meetingData.supervisionType.supervisionType} 
                   </h6>
-                ))}
+                ))}  
 
               <h1>{globalState.userId}</h1>
               <Typography variant="span">Session Information</Typography>

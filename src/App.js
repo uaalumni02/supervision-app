@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Supervision from "./pages/Supervision";
 import RequestToken from "./pages/RequestToken";
 import Reset from "./pages/Reset";
+import Meeting from "./pages/Meeting";
 
 import GlobalStateProvider from "./store/GlobalStateProvider";
 
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/supervision" component={Supervision} />
             <Route exact path="/requestToken" component={RequestToken} />
             <Route exact path="/reset/:id" component={Reset} />
+            <Route exact path="/meeting" component={Meeting} />
           </Switch>
           {/* <UserContextProvider> */}
           {/* </UserContextProvider> */}
