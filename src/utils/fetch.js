@@ -1,10 +1,11 @@
 import fetch from "node-fetch";
 
-export const post = async (url, body) => {
+export const post = async (url, body, header = {}) => {
   const res = await fetch(url, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
+      ...header
     },
     body: JSON.stringify(body),
   });

@@ -33,6 +33,8 @@ import avatar from "../assets/avatar.png";
 import { Redirect, useHistory } from "react-router-dom";
 import settings from "../config/configData";
 
+import Context from "../store/context";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 370,
@@ -94,16 +96,42 @@ const useStyles = makeStyles((theme) => ({
 const Meeting = () => {
   const [supervisionType, setSupervisionType] = useState([]);
   const [units, setUnits] = useState([]);
+  const [numberOfAttendees, setNumberOfAttendees] = useState("");
+  const [date, setDate] = useState("");
+  const [content, setContent] = useState("");
+  const [attendees, setAttendees] = useState("");
+
+  //need this for user Id
+  const { globalState, globalDispatch } = useContext(Context);
 
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
-
+    
     setSupervisionType(supervisionUnitResponse.supervision);
     setUnits(supervisionUnitResponse.units);
   };
   useEffect(() => {
     fetchSupervisionUnitData();
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const meetingResponse = await Api.submitMeetingData({
+      // numberOfAttendees: "2",
+      // date: "2021-01-09 12:00pm",
+      // content: "This is a test",
+      // attendees: "5fea7dbf1f5d6406b200d7cb",
+      // units: "5ffa3261b2ffdc03bce64ef8",
+      // supervisionType: "5ffa32deb2ffdc03bce64efc",
+      numberOfAttendees,
+      date,
+      content,
+      attendees,
+      units,
+      supervisionType
+    });
+    console.log(supervisionType);
+  };
 
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -144,6 +172,7 @@ const Meeting = () => {
                   aria-label="position"
                   name="position"
                   defaultValue="top"
+                  // onChange={e => setSupervisionType(e.target.value)}
                 >
                   {supervisionType.map((supervision) => {
                     return (
@@ -153,6 +182,7 @@ const Meeting = () => {
                         control={<Radio color="primary" />}
                         label={supervision.supervisionType}
                         labelPlacement="start"
+                        name="supversionTypeId"
                       />
                     );
                   })}
@@ -169,7 +199,6 @@ const Meeting = () => {
                   defaultValue="top"
                 >
                   {units.map((supervisionUnit) => {
-                    console.log(supervisionUnit);
                     return (
                       <FormControlLabel
                         key={supervisionType._id}
@@ -196,14 +225,16 @@ const Meeting = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </form>
               <TextareaAutosize
                 rowsMax={4}
                 aria-label="maximum height"
                 placeholder="Maximum 4 rows"
-                defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua."
+                //           defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                // ut labore et dolore magna aliqua."
+                onChange={(e) => setContent(e.target.value)}
               />
 
               <Box display="flex" alignItems="center" justifyContent="center">
@@ -216,7 +247,7 @@ const Meeting = () => {
                   size="large"
                   color="primary"
                   className={classes.form.loginButton}
-                  //   onClick={handleSubmit}
+                  onClick={handleSubmit}
                 >
                   Submit
                 </Button>

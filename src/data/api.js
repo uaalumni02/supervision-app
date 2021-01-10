@@ -16,6 +16,10 @@ const resetPasswordApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/updatePassword${path}`;
 };
 
+const submitMeetingApiUrl = () => {
+  return `${settings.apiBaseUrl}/api/meeting`;
+};
+
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
   const response = await post(apiUrl, { username, password });
@@ -63,11 +67,21 @@ const supervisionUnits = async (user) => {
   return response;
 };
 
+const submitMeetingData = async (meetingData) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = submitMeetingApiUrl("/");
+  const response = await post(apiUrl,{ ...meetingData}, headers);
+  return response;
+};
+
 export default {
   login,
   register,
   supervision,
   resetToken,
   resetPassword,
-  supervisionUnits
+  supervisionUnits,
+  submitMeetingData
 };
