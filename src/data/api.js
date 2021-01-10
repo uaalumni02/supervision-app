@@ -31,6 +31,10 @@ const register = async (user) => {
   return response;
 };
 
+const supervisionUnitsApiUrl = () => {
+  return `${settings.apiBaseUrl}/api/supervisionUnits`;
+};
+
 const supervision = async (user) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
@@ -50,10 +54,20 @@ const resetPassword = async (passwordData, id) => {
   return response;
 };
 
+const supervisionUnits = async (user) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = supervisionUnitsApiUrl ("/");
+  const response = await get(apiUrl, headers);
+  return response;
+};
+
 export default {
   login,
   register,
   supervision,
   resetToken,
   resetPassword,
+  supervisionUnits
 };

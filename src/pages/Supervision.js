@@ -101,7 +101,6 @@ const Supervision = () => {
 
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
-console.log(meetingResponse)
     const supervisions = meetingResponse;
     globalDispatch({
       type: "SET_SUPERVISION_DATA",

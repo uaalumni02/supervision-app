@@ -96,6 +96,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Meeting = () => {
+
+  const fetchSupervisionUnitData = async (event) => {
+    const supervisionUnitResponse = await Api.supervisionUnits();
+    console.log(supervisionUnitResponse)
+  };
+  useEffect(() => {
+    fetchSupervisionUnitData()
+  }, []);
+
+
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
