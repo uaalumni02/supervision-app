@@ -90,7 +90,6 @@ const Register = () => {
       email,
     };
     const registerResponse = await Api.register(user);
-    console.log(registerResponse)
 
     if (!registerResponse.success) {
       setError(registerResponse.message);

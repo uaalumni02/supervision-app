@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   TextField,
   TextareaAutosize,
-  //   value,
 } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
@@ -19,10 +18,7 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-// import UserApi from "../helpers/user";
 import Api from "../data/api";
-import LocalStorage from "../utils/localstorage";
-import Context from "../store/context";
 
 import {
   FormControl,
@@ -96,15 +92,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Meeting = () => {
+  const [supervisionType, setSupervisionType] = useState([]);
+  const [units, setUnits] = useState([]);
 
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
-    console.log(supervisionUnitResponse)
+
+    setSupervisionType(supervisionUnitResponse.supervision);
+    setUnits(supervisionUnitResponse.units);
   };
   useEffect(() => {
-    fetchSupervisionUnitData()
+    fetchSupervisionUnitData();
   }, []);
-
 
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -146,34 +145,21 @@ const Meeting = () => {
                   name="position"
                   defaultValue="top"
                 >
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="Ind"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="Dyad"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="Group"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="Consult"
-                    labelPlacement="start"
-                  />
+                  {supervisionType.map((supervision) => {
+                    return (
+                      <FormControlLabel
+                        key={supervision._id}
+                        value={supervision._id}
+                        control={<Radio color="primary" />}
+                        label={supervision.supervisionType}
+                        labelPlacement="start"
+                      />
+                    );
+                  })}
                 </RadioGroup>
               </FormControl>
-              </form>
-              <form>
+            </form>
+            <form>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
                 <RadioGroup
@@ -182,33 +168,21 @@ const Meeting = () => {
                   name="position"
                   defaultValue="top"
                 >
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="15"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="30"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="45"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="start"
-                    control={<Radio color="primary" />}
-                    label="60"
-                    labelPlacement="start"
-                  />
+                  {units.map((supervisionUnit) => {
+                    console.log(supervisionUnit);
+                    return (
+                      <FormControlLabel
+                        key={supervisionType._id}
+                        value={supervisionUnit._id}
+                        control={<Radio color="primary" />}
+                        label={supervisionUnit.unit}
+                        labelPlacement="start"
+                      />
+                    );
+                  })}
                 </RadioGroup>
               </FormControl>
-              
+
               <form noValidate autoComplete="off">
                 <TextField id="standard-basic" label="Number of Attendees" />
               </form>
