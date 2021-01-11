@@ -101,15 +101,20 @@ const Meeting = () => {
   const [content, setContent] = useState("");
   const [attendees, setAttendees] = useState("");
 
-  //need this for user Id
+  const [supervisionTypeId, setSupervisionTypeId] = useState("");
+  const [unitId, setUnitId] = useState("");
+
   const { globalState, globalDispatch } = useContext(Context);
+
 
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
-    
+
     setSupervisionType(supervisionUnitResponse.supervision);
+
     setUnits(supervisionUnitResponse.units);
   };
+
   useEffect(() => {
     fetchSupervisionUnitData();
   }, []);
@@ -117,20 +122,14 @@ const Meeting = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const meetingResponse = await Api.submitMeetingData({
-      // numberOfAttendees: "2",
-      // date: "2021-01-09 12:00pm",
-      // content: "This is a test",
-      // attendees: "5fea7dbf1f5d6406b200d7cb",
-      // units: "5ffa3261b2ffdc03bce64ef8",
-      // supervisionType: "5ffa32deb2ffdc03bce64efc",
       numberOfAttendees,
       date,
       content,
-      attendees,
-      units,
-      supervisionType
+      attendees: globalState.userId,
+      units: unitId,
+      supervisionType: supervisionTypeId,
     });
-    console.log(supervisionType);
+    console.log(meetingResponse)
   };
 
   const classes = useStyles();
@@ -170,7 +169,7 @@ const Meeting = () => {
                 <RadioGroup
                   row
                   aria-label="position"
-                  name="position"
+                  // name="position"
                   defaultValue="top"
                   // onChange={e => setSupervisionType(e.target.value)}
                 >
@@ -182,7 +181,10 @@ const Meeting = () => {
                         control={<Radio color="primary" />}
                         label={supervision.supervisionType}
                         labelPlacement="start"
-                        name="supversionTypeId"
+                        name="supervision"
+                        onChange={(e) => {
+                          setSupervisionTypeId(e.target.value);
+                        }}
                       />
                     );
                   })}
@@ -206,6 +208,9 @@ const Meeting = () => {
                         control={<Radio color="primary" />}
                         label={supervisionUnit.unit}
                         labelPlacement="start"
+                        onChange={(e) => {
+                          setUnitId(e.target.value);
+                        }}
                       />
                     );
                   })}
@@ -213,15 +218,17 @@ const Meeting = () => {
               </FormControl>
 
               <form noValidate autoComplete="off">
-                <TextField id="standard-basic" label="Number of Attendees" />
+                <TextField
+                  id="standard-basic"
+                  label="Number of Attendees"
+                  onChange={(e) => setNumberOfAttendees(e.target.value)}
+                />
               </form>
               <form className={classes.container} noValidate>
                 <TextField
                   id="datetime-local"
                   label="Date & Time"
                   type="datetime-local"
-                  defaultValue="2017-05-24T10:30"
-                  //   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -232,8 +239,6 @@ const Meeting = () => {
                 rowsMax={4}
                 aria-label="maximum height"
                 placeholder="Maximum 4 rows"
-                //           defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                // ut labore et dolore magna aliqua."
                 onChange={(e) => setContent(e.target.value)}
               />
 
