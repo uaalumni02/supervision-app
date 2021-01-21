@@ -20,6 +20,10 @@ const submitMeetingApiUrl = () => {
   return `${settings.apiBaseUrl}/api/meeting`;
 };
 
+const userApiUrl = () => {
+  return `${settings.apiBaseUrl}/api/user`;
+};
+
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
   const response = await post(apiUrl, { username, password });
@@ -76,6 +80,15 @@ const submitMeetingData = async (meetingData) => {
   return response;
 };
 
+const userData = async (user) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = userApiUrl ("/");
+  const response = await get(apiUrl, headers);
+  return response;
+};
+
 export default {
   login,
   register,
@@ -83,5 +96,6 @@ export default {
   resetToken,
   resetPassword,
   supervisionUnits,
-  submitMeetingData
+  submitMeetingData,
+  userData
 };

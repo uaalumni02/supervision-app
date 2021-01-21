@@ -38,7 +38,7 @@ const Header = () => {
   };
   const classes = useStyles();
   return (
-    <Box display="flex" bgcolor="grey.200" p={2} alignItems="center">
+    <Box display="flex" bgcolor="info.main" p={2} alignItems="center">
       <Typography>CHRIS 180</Typography>
       <IconButton
         href="/meeting"

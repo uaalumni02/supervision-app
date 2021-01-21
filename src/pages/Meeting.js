@@ -8,6 +8,10 @@ import {
   FormControlLabel,
   TextField,
   TextareaAutosize,
+  Select,
+  ListItemText,
+  Checkbox,
+  Chip
 } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
@@ -15,6 +19,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Avatar from "@material-ui/core/Avatar";
 
@@ -99,25 +105,40 @@ const Meeting = () => {
   const [numberOfAttendees, setNumberOfAttendees] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
-  const [attendees, setAttendees] = useState("");
+  const [attendees, setAttendees] = useState([]);
 
   const [supervisionTypeId, setSupervisionTypeId] = useState("");
   const [unitId, setUnitId] = useState("");
+  const [attendeeId, setAttendeeId] = useState([]);
 
   const { globalState, globalDispatch } = useContext(Context);
 
-
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
-
     setSupervisionType(supervisionUnitResponse.supervision);
-
     setUnits(supervisionUnitResponse.units);
+  };
+
+  const fetchUser = async () => {
+    const userResponse = await Api.userData();
+    console.log(userResponse.data)
+    console.log('user res', userResponse)
+    setAttendees(userResponse.data);
+
   };
 
   useEffect(() => {
     fetchSupervisionUnitData();
+    fetchUser();
   }, []);
+
+
+  const setAttendeesOnChange = (e) => {
+    const selectedValues = e.target.value;
+
+    console.log('list of attend selected', selectedValues)
+    setAttendeeId(selectedValues)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -129,7 +150,6 @@ const Meeting = () => {
       units: unitId,
       supervisionType: supervisionTypeId,
     });
-    console.log(meetingResponse)
   };
 
   const classes = useStyles();
@@ -166,13 +186,7 @@ const Meeting = () => {
             <form>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
-                <RadioGroup
-                  row
-                  aria-label="position"
-                  // name="position"
-                  defaultValue="top"
-                  // onChange={e => setSupervisionType(e.target.value)}
-                >
+                <RadioGroup row aria-label="position" defaultValue="top">
                   {supervisionType.map((supervision) => {
                     return (
                       <FormControlLabel
@@ -191,6 +205,48 @@ const Meeting = () => {
                 </RadioGroup>
               </FormControl>
             </form>
+
+         
+              <FormControl>
+                <InputLabel>
+                  Attendees
+                </InputLabel>
+                <Select
+                  value={attendeeId}
+                  multiple
+                  displayEmpty
+                  onChange={setAttendeesOnChange}
+                  renderValue={(selected) => {
+                    console.log('curr', selected)
+                    return (
+                      <div>
+                       {selected.map(id => {
+                         const selectedAttendee = attendees.find(person => {
+                           return person._id === id
+                         })
+
+                         return (<Chip key={selectedAttendee._id} label={`${selectedAttendee.firstName} ${selectedAttendee.lastName}`}></Chip>)
+                       })}
+                      </div>
+                    )
+                  }}
+                >
+                  {attendees.map((person) => {
+                    console.log('current to populate', person)
+                    return (
+                      <MenuItem key={person._id} value={person._id}>
+                
+                         {/* <Checkbox checked={personName.indexOf(name) > -1} /> */}
+                         <Checkbox checked={attendeeId.includes(person._id)} />
+                        <ListItemText primary={person.firstName} /> 
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                <FormHelperText>Select the session attendees</FormHelperText>
+              </FormControl>
+        
+
             <form>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
