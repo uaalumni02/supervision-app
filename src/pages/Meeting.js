@@ -11,7 +11,7 @@ import {
   Select,
   ListItemText,
   Checkbox,
-  Chip
+  Chip,
 } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
@@ -121,10 +121,7 @@ const Meeting = () => {
 
   const fetchUser = async () => {
     const userResponse = await Api.userData();
-    console.log(userResponse.data)
-    console.log('user res', userResponse)
     setAttendees(userResponse.data);
-
   };
 
   useEffect(() => {
@@ -132,13 +129,12 @@ const Meeting = () => {
     fetchUser();
   }, []);
 
-
   const setAttendeesOnChange = (e) => {
     const selectedValues = e.target.value;
-
-    console.log('list of attend selected', selectedValues)
-    setAttendeeId(selectedValues)
-  }
+    const attendeeNumber = selectedValues.length;
+    setNumberOfAttendees(attendeeNumber);
+    setAttendeeId(selectedValues);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -146,7 +142,7 @@ const Meeting = () => {
       numberOfAttendees,
       date,
       content,
-      attendees: globalState.userId,
+      attendees: attendeeId,
       units: unitId,
       supervisionType: supervisionTypeId,
     });
@@ -206,46 +202,43 @@ const Meeting = () => {
               </FormControl>
             </form>
 
-         
-              <FormControl>
-                <InputLabel>
-                  Attendees
-                </InputLabel>
-                <Select
-                  value={attendeeId}
-                  multiple
-                  displayEmpty
-                  onChange={setAttendeesOnChange}
-                  renderValue={(selected) => {
-                    console.log('curr', selected)
-                    return (
-                      <div>
-                       {selected.map(id => {
-                         const selectedAttendee = attendees.find(person => {
-                           return person._id === id
-                         })
+            <FormControl>
+              <InputLabel>Attendees</InputLabel>
+              <Select
+                value={attendeeId}
+                multiple
+                displayEmpty
+                onChange={setAttendeesOnChange}
+                renderValue={(selected) => {
+                  return (
+                    <div>
+                      {selected.map((id) => {
+                        const selectedAttendee = attendees.find((person) => {
+                          return person._id === id;
+                        });
 
-                         return (<Chip key={selectedAttendee._id} label={`${selectedAttendee.firstName} ${selectedAttendee.lastName}`}></Chip>)
-                       })}
-                      </div>
-                    )
-                  }}
-                >
-                  {attendees.map((person) => {
-                    console.log('current to populate', person)
-                    return (
-                      <MenuItem key={person._id} value={person._id}>
-                
-                         {/* <Checkbox checked={personName.indexOf(name) > -1} /> */}
-                         <Checkbox checked={attendeeId.includes(person._id)} />
-                        <ListItemText primary={person.firstName} /> 
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                <FormHelperText>Select the session attendees</FormHelperText>
-              </FormControl>
-        
+                        return (
+                          <Chip
+                            key={selectedAttendee._id}
+                            label={`${selectedAttendee.firstName} ${selectedAttendee.lastName}`}
+                          ></Chip>
+                        );
+                      })}
+                    </div>
+                  );
+                }}
+              >
+                {attendees.map((person) => {
+                  return (
+                    <MenuItem key={person._id} value={person._id}>
+                      <Checkbox checked={attendeeId.includes(person._id)} />
+                      <ListItemText primary={person.firstName} />
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              <FormHelperText>Select the session attendees</FormHelperText>
+            </FormControl>
 
             <form>
               <FormControl component="fieldset">
@@ -273,13 +266,6 @@ const Meeting = () => {
                 </RadioGroup>
               </FormControl>
 
-              <form noValidate autoComplete="off">
-                <TextField
-                  id="standard-basic"
-                  label="Number of Attendees"
-                  onChange={(e) => setNumberOfAttendees(e.target.value)}
-                />
-              </form>
               <form className={classes.container} noValidate>
                 <TextField
                   id="datetime-local"
