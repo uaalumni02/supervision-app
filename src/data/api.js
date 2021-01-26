@@ -24,6 +24,10 @@ const userApiUrl = () => {
   return `${settings.apiBaseUrl}/api/user`;
 };
 
+const meetingIdUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/meetingId${path}`;
+};
+
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
   const response = await post(apiUrl, { username, password });
@@ -89,6 +93,17 @@ const userData = async (user) => {
   return response;
 };
 
+const mySupervisions = async (id) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = meetingIdUrl("/" + id);
+  const response = await get(apiUrl, headers);
+  return response;
+};
+
+
+
 export default {
   login,
   register,
@@ -97,5 +112,6 @@ export default {
   resetPassword,
   supervisionUnits,
   submitMeetingData,
-  userData
+  userData,
+  mySupervisions
 };

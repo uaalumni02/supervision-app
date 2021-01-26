@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import settings from "../config/configData";
 import { Grid, Paper, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";

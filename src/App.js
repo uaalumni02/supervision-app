@@ -25,7 +25,7 @@ function App() {
             <Route exact path="/requestToken" component={RequestToken} />
             <Route exact path="/reset/:id" component={Reset} />
             <Route exact path="/meeting" component={Meeting} />
-            <Route exact path="/myMeetings:id" component={MyMeetings} />
+            <Route exact path="/myMeetings/:id" component={MyMeetings} />
           </Switch>
           {/* <UserContextProvider> */}
           {/* </UserContextProvider> */}

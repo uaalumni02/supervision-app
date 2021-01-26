@@ -2,14 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { Grid, Box, Link } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 
 import Avatar from "@material-ui/core/Avatar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-
-import ListItemText from "@material-ui/core/ListItemText";
 
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
@@ -17,7 +12,7 @@ import avatar from "../assets/avatar.png";
 import { Redirect, useHistory } from "react-router-dom";
 
 import Api from "../data/api";
-import LocalStorage from "../utils/localstorage";
+
 import Context from "../store/context";
 import * as moment from "moment";
 
@@ -96,8 +91,9 @@ const Supervision = () => {
 
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
+    console.log(meetingResponse);
     const supervisions = meetingResponse;
-    // console.log(supervisions.data[0].date);
+
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
       payload: supervisions.data,
@@ -136,7 +132,7 @@ const Supervision = () => {
               <ul component="nav">
                 {globalState.supervisions &&
                   globalState.supervisions.map((meetingData) => (
-                    <a href={"/myMeetings/" + `${globalState.userId}`}>
+                    <a href={"/myMeetings/" + `${meetingData._id}`}>
                       {moment.unix(meetingData.date).format("MM-DD-YYYY") +
                         meetingData.supervisionType.supervisionType}
                     </a>

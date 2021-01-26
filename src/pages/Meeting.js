@@ -7,7 +7,6 @@ import {
   Radio,
   FormControlLabel,
   TextField,
-  TextareaAutosize,
   Select,
   ListItemText,
   Checkbox,
@@ -15,7 +14,6 @@ import {
 } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -36,8 +34,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
-import { Redirect, useHistory } from "react-router-dom";
-import settings from "../config/configData";
+
 
 import Context from "../store/context";
 
@@ -146,7 +143,6 @@ const Meeting = () => {
       units: unitId,
       supervisionType: supervisionTypeId,
     });
-    console.log(meetingResponse);
   };
 
   const classes = useStyles();

@@ -24,8 +24,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
-import { Redirect, useHistory } from "react-router-dom";
-import settings from "../config/configData";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
