@@ -133,15 +133,15 @@ const Supervision = () => {
               <Typography variant="span">Supervisions</Typography>
             </Box>
             <div className={classes.root}>
-              <List component="nav">
+              <ul component="nav">
                 {globalState.supervisions &&
                   globalState.supervisions.map((meetingData) => (
-                    <li key={globalState.userId} value={globalState.userId}>
+                    <a href={"/myMeetings/" + `${globalState.userId}`}>
                       {moment.unix(meetingData.date).format("MM-DD-YYYY") +
                         meetingData.supervisionType.supervisionType}
-                    </li>
+                    </a>
                   ))}
-              </List>
+              </ul>
             </div>
           </CardContent>
         </Card>

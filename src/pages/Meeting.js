@@ -284,10 +284,17 @@ const Meeting = () => {
                 />
               </form>
               <br></br>
-              <TextareaAutosize
+              {/* <TextareaAutosize
                 rowsMax={4}
                 aria-label="maximum height"
                 placeholder="Maximum 4 rows"
+                onChange={(e) => setContent(e.target.value)}
+              /> */}
+              <TextField
+                id="outlined-multiline-static"
+                multiline
+                rows={10}
+                variant="outlined"
                 onChange={(e) => setContent(e.target.value)}
               />
 

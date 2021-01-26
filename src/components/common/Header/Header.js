@@ -47,7 +47,16 @@ const Header = () => {
         color="inherit"
         aria-label="menu"
       >
-        <Typography>Supervision</Typography>
+        <Typography>Add Supervision</Typography>
+      </IconButton>
+      <IconButton
+        href="/supervision"
+        edge="start"
+        className={classes.menuButton}
+        color="inherit"
+        aria-label="menu"
+      >
+        <Typography>All Meetings</Typography>
       </IconButton>
       <Box flexGrow={2} textAlign="right">
         <IconButton>
