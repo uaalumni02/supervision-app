@@ -146,6 +146,7 @@ const Meeting = () => {
       units: unitId,
       supervisionType: supervisionTypeId,
     });
+    console.log(meetingResponse);
   };
 
   const classes = useStyles();
@@ -199,46 +200,9 @@ const Meeting = () => {
                     );
                   })}
                 </RadioGroup>
+                <FormHelperText>Select supervision type</FormHelperText>
               </FormControl>
             </form>
-
-            <FormControl>
-              <InputLabel>Attendees</InputLabel>
-              <Select
-                value={attendeeId}
-                multiple
-                displayEmpty
-                onChange={setAttendeesOnChange}
-                renderValue={(selected) => {
-                  return (
-                    <div>
-                      {selected.map((id) => {
-                        const selectedAttendee = attendees.find((person) => {
-                          return person._id === id;
-                        });
-
-                        return (
-                          <Chip
-                            key={selectedAttendee._id}
-                            label={`${selectedAttendee.firstName} ${selectedAttendee.lastName}`}
-                          ></Chip>
-                        );
-                      })}
-                    </div>
-                  );
-                }}
-              >
-                {attendees.map((person) => {
-                  return (
-                    <MenuItem key={person._id} value={person._id}>
-                      <Checkbox checked={attendeeId.includes(person._id)} />
-                      <ListItemText primary={person.firstName} />
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText>Select the session attendees</FormHelperText>
-            </FormControl>
 
             <form>
               <FormControl component="fieldset">
@@ -265,6 +229,48 @@ const Meeting = () => {
                   })}
                 </RadioGroup>
               </FormControl>
+              <form>
+                <FormControl>
+                  <InputLabel>Attendees</InputLabel>
+                  <Select
+                    value={attendeeId}
+                    multiple
+                    displayEmpty
+                    onChange={setAttendeesOnChange}
+                    renderValue={(selected) => {
+                      return (
+                        <div>
+                          {selected.map((id) => {
+                            const selectedAttendee = attendees.find(
+                              (person) => {
+                                return person._id === id;
+                              }
+                            );
+
+                            return (
+                              <Chip
+                                key={selectedAttendee._id}
+                                label={`${selectedAttendee.firstName} ${selectedAttendee.lastName}`}
+                              ></Chip>
+                            );
+                          })}
+                        </div>
+                      );
+                    }}
+                  >
+                    {attendees.map((person) => {
+                      return (
+                        <MenuItem key={person._id} value={person._id}>
+                          <Checkbox checked={attendeeId.includes(person._id)} />
+                          <ListItemText primary={person.firstName} />
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                  <FormHelperText>Select the session attendees</FormHelperText>
+                </FormControl>
+              </form>
+              <br></br>
 
               <form className={classes.container} noValidate>
                 <TextField
@@ -277,6 +283,7 @@ const Meeting = () => {
                   onChange={(e) => setDate(e.target.value)}
                 />
               </form>
+              <br></br>
               <TextareaAutosize
                 rowsMax={4}
                 aria-label="maximum height"

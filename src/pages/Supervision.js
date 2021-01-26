@@ -1,21 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Grid, Box, Link } from "@material-ui/core";
-
+import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
-import {
-  FormControl,
-  Input,
-  InputLabel,
-  FormHelperText,
-} from "@material-ui/core";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
@@ -25,6 +19,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 import Context from "../store/context";
+import * as moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,6 +97,7 @@ const Supervision = () => {
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
     const supervisions = meetingResponse;
+    // console.log(supervisions.data[0].date);
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
       payload: supervisions.data,
@@ -134,36 +130,20 @@ const Supervision = () => {
               fontWeight={300}
               fontSize="h5.fontSize"
             >
-                {globalState.supervisions &&
-                globalState.supervisions.map((meetingData) => (
-                  <h6>
-                    {meetingData.content}
-                    <br></br>
-                    {meetingData.numberOfAttendees}
-                    <br></br>
-                     {meetingData.supervisionType.supervisionType} 
-                  </h6>
-                ))}  
-
-              <h1>{globalState.userId}</h1>
-              <Typography variant="span">Session Information</Typography>
+              <Typography variant="span">Supervisions</Typography>
             </Box>
+            <div className={classes.root}>
+              <List component="nav">
+                {globalState.supervisions &&
+                  globalState.supervisions.map((meetingData) => (
+                    <li key={globalState.userId} value={globalState.userId}>
+                      {moment.unix(meetingData.date).format("MM-DD-YYYY") +
+                        meetingData.supervisionType.supervisionType}
+                    </li>
+                  ))}
+              </List>
+            </div>
           </CardContent>
-          <form>
-            <FormControl fullWidth margin="dense">
-              <TextareaAutosize
-                className={classes.root}
-                rowsMax={4}
-                aria-label="maximum height"
-                placeholder="Enter Session Information"
-              />
-            </FormControl>
-            <FormControl margin="normal">
-              <Button variant="contained" size="large" color="primary">
-                Submit
-              </Button>
-            </FormControl>
-          </form>
         </Card>
       </Grid>
     </Grid>
