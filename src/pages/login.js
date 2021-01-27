@@ -104,6 +104,7 @@ const Login = () => {
     event.preventDefault();
 
     const loginResponse = await Api.login(username, password);
+    console.log(loginResponse)
 
     if (!loginResponse.success) {
       setError(loginResponse.message);
@@ -155,7 +156,7 @@ const Login = () => {
                   id="username"
                   aria-aria-describedby="email-helper-text"
                   onChange={(e) =>
-                    setUsername(e.target.value.toLowerCase().trim())
+                    setUsername(e.target.value)
                   }
                 />
                 <FormHelperText id="email-helper-text">
