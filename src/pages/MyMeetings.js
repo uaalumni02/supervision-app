@@ -79,6 +79,7 @@ const MySupervision = () => {
   const [supervisionType, setSupervisionType] = useState("");
   const [units, setUnits] = useState("");
   const [content, setContent] = useState("");
+  const [attendees, setAttendees] = useState([]);
 
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -86,10 +87,12 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
+    console.log(meetingResponse.data.attendees);
+    setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
     setUnits(meetingResponse.data.units.unit);
-    setContent(meetingResponse.data.content)
+    setContent(meetingResponse.data.content);
   };
 
   useEffect(() => {
@@ -128,6 +131,11 @@ const MySupervision = () => {
             <p> Meeting Type: {supervisionType}</p>
             <p>Mintues: {units}</p>
             <p>Content: {content}</p>
+            {attendees.map((names) => (
+              <p>
+                Attendee(s): {names.firstName} {names.lastName}
+              </p>
+            ))}
           </CardContent>
         </Card>
       </Grid>
