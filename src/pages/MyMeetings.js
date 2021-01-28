@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Grid, Box, Link } from "@material-ui/core";
+import { Grid, Box, Link, FormControl } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-
+import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.success.light,
   },
   form: {
-    loginButton: {
+    signButton: {
       backgroundColor: "#3f51b5",
       color: "#fff",
     },
@@ -80,6 +80,7 @@ const MySupervision = () => {
   const [units, setUnits] = useState("");
   const [content, setContent] = useState("");
   const [attendees, setAttendees] = useState([]);
+  const [userAttended, setUserAttended] = useState(false);
 
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -87,12 +88,17 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
-    console.log(meetingResponse.data.attendees);
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
     setUnits(meetingResponse.data.units.unit);
     setContent(meetingResponse.data.content);
+
+    for (let i = 0; i < meetingResponse.data.attendees.length; i++) {
+      if (meetingResponse.data.attendees[i]._id === globalState.userId) {
+        setUserAttended(true);
+      }
+    }
   };
 
   useEffect(() => {
@@ -136,6 +142,19 @@ const MySupervision = () => {
                 Attendee(s): {names.firstName} {names.lastName}
               </p>
             ))}
+
+            <div>
+              {userAttended ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  className={classes.form.signButton}
+                >
+                  Sign
+                </Button>
+              ) : null}
+            </div>
           </CardContent>
         </Card>
       </Grid>
