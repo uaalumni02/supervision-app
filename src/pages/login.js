@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 
 import Avatar from "@material-ui/core/Avatar";
 
-// import UserApi from "../helpers/user";
 import Api from "../data/api";
 import LocalStorage from "../utils/localstorage";
 import Context from "../store/context";
@@ -104,8 +103,7 @@ const Login = () => {
     event.preventDefault();
 
     const loginResponse = await Api.login(username, password);
-    console.log(loginResponse)
-
+  
     if (!loginResponse.success) {
       setError(loginResponse.message);
       return false;
