@@ -28,6 +28,10 @@ const meetingIdUrl = (path) => {
   return `${settings.apiBaseUrl}/api/meetingId${path}`;
 };
 
+const signApiUrl = () => {
+  return `${settings.apiBaseUrl}/api/approval`;
+};
+
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
   const response = await post(apiUrl, { username, password });
@@ -102,7 +106,14 @@ const mySupervisions = async (id) => {
   return response;
 };
 
-
+const submitSignatureData = async (meetingId, userId) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = signApiUrl("/");
+  const response = await post(apiUrl,{ meetingId, userId}, headers);
+  return response;
+};
 
 export default {
   login,
@@ -113,5 +124,6 @@ export default {
   supervisionUnits,
   submitMeetingData,
   userData,
-  mySupervisions
+  mySupervisions,
+  submitSignatureData
 };

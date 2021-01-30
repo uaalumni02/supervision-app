@@ -81,13 +81,14 @@ const MySupervision = () => {
   const [content, setContent] = useState("");
   const [attendees, setAttendees] = useState([]);
   const [userAttended, setUserAttended] = useState(false);
-
+  const [userId, setUserId] = useState("");
   const { globalState, globalDispatch } = useContext(Context);
 
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
+    // console.log(meetingResponse.data.attendees._id)
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
@@ -95,6 +96,8 @@ const MySupervision = () => {
     setContent(meetingResponse.data.content);
 
     for (let i = 0; i < meetingResponse.data.attendees.length; i++) {
+      // console.log(meetingResponse.data.attendees[i]._id)
+      setUserId(meetingResponse.data.attendees[i]._id)
       if (meetingResponse.data.attendees[i]._id === globalState.userId) {
         setUserAttended(true);
       }
@@ -104,6 +107,13 @@ const MySupervision = () => {
   useEffect(() => {
     fetchMeetingData();
   }, []);
+
+  const signNote = async () => {
+    const url = window.location.pathname;
+    const meetingId = url.substring(url.lastIndexOf("/") + 1);
+    const signatureResponse = await Api.submitSignatureData(meetingId, userId);
+    console.log(signatureResponse)
+  };
 
   return (
     <Grid
@@ -150,6 +160,7 @@ const MySupervision = () => {
                   size="large"
                   color="primary"
                   className={classes.form.signButton}
+                  onClick={signNote}
                 >
                   Sign
                 </Button>
