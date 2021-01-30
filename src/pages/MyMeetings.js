@@ -16,6 +16,7 @@ import Api from "../data/api";
 import Context from "../store/context";
 import * as moment from "moment";
 
+import "../static/myMeeting.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -118,14 +119,11 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
-    // console.log(signatureResponse)
   };
   //now I need route to get signed notes by using signNoteId and take first and last name and render to page; then if already signed dont sign again
 
   const signedNoteData = async (event) => {
     const signedNoteResponse = await Api.getSignedNoteData();
-    // console.log(signNoteId)
-    // console.log(signedNoteResponse.data)
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
       setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
       setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
@@ -159,6 +157,7 @@ const MySupervision = () => {
             >
               <Typography variant="span">My Supervisions</Typography>
             </Box>
+            <br></br>
             <p> Date: {moment.unix(meetingDate).format("MM-DD-YYYY")}</p>
             <p> Meeting Type: {supervisionType}</p>
             <p>Mintues: {units}</p>
@@ -169,7 +168,7 @@ const MySupervision = () => {
               </p>
             ))}
             <p>
-              Signed: {noteSignedFirstName} {noteSignedLastName}
+              Signed: <p className="signature"> {noteSignedFirstName} {noteSignedLastName}</p>
             </p>
 
             <div>

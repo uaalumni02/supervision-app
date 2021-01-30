@@ -65,7 +65,7 @@ const Header = () => {
       </Box>
       {!globalState.isLoggedIn && <a href="#">Login</a>}
       {globalState.isLoggedIn && (
-        <a onClick={handleLogout} href="#">
+        <a onClick={handleLogout} href="/">
           Log Out
         </a>
       )}

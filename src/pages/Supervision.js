@@ -131,10 +131,12 @@ const Supervision = () => {
               <ul component="nav">
                 {globalState.supervisions &&
                   globalState.supervisions.map((meetingData) => (
+                    <ul>
                     <a href={"/myMeetings/" + `${meetingData._id}`}>
                       {moment.unix(meetingData.date).format("MM-DD-YYYY") + '--' +
                         meetingData.supervisionType.supervisionType}
                     </a>
+                    </ul>
                   ))}
               </ul>
             </div>
