@@ -16,6 +16,7 @@ import Api from "../data/api";
 import Context from "../store/context";
 import * as moment from "moment";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 370,
@@ -72,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
       color: "red",
     },
   },
+  typography: {
+    fontFamily: "'Montserrat', sans-serif",
+    textTransform: "none",
+  },
 }));
 const MySupervision = () => {
   const classes = useStyles();
@@ -82,13 +87,14 @@ const MySupervision = () => {
   const [attendees, setAttendees] = useState([]);
   const [userAttended, setUserAttended] = useState(false);
   const [userId, setUserId] = useState("");
+  const [noteSignedFirstName, setNoteSignedFirstName] = useState("");
+  const [noteSignedLastName, setNoteSignedLastName] = useState("");
   const { globalState, globalDispatch } = useContext(Context);
 
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
-    // console.log(meetingResponse.data.attendees._id)
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
@@ -96,8 +102,7 @@ const MySupervision = () => {
     setContent(meetingResponse.data.content);
 
     for (let i = 0; i < meetingResponse.data.attendees.length; i++) {
-      // console.log(meetingResponse.data.attendees[i]._id)
-      setUserId(meetingResponse.data.attendees[i]._id)
+      setUserId(meetingResponse.data.attendees[i]._id);
       if (meetingResponse.data.attendees[i]._id === globalState.userId) {
         setUserAttended(true);
       }
@@ -106,15 +111,26 @@ const MySupervision = () => {
 
   useEffect(() => {
     fetchMeetingData();
+    signedNoteData();
   }, []);
 
   const signNote = async () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
-    console.log(signatureResponse)
+    // console.log(signatureResponse)
   };
+  //now I need route to get signed notes by using signNoteId and take first and last name and render to page; then if already signed dont sign again
 
+  const signedNoteData = async (event) => {
+    const signedNoteResponse = await Api.getSignedNoteData();
+    // console.log(signNoteId)
+    // console.log(signedNoteResponse.data)
+    for (let i = 0; i < signedNoteResponse.data.length; i++) {
+      setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
+      setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
+    }
+  };
   return (
     <Grid
       container
@@ -152,6 +168,9 @@ const MySupervision = () => {
                 Attendee(s): {names.firstName} {names.lastName}
               </p>
             ))}
+            <p>
+              Signed: {noteSignedFirstName} {noteSignedLastName}
+            </p>
 
             <div>
               {userAttended ? (

@@ -74,7 +74,7 @@ const supervisionUnits = async (user) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const headers = { Authorization: bearer };
-  const apiUrl = supervisionUnitsApiUrl ("/");
+  const apiUrl = supervisionUnitsApiUrl("/");
   const response = await get(apiUrl, headers);
   return response;
 };
@@ -84,7 +84,7 @@ const submitMeetingData = async (meetingData) => {
   const bearer = "Bearer " + token;
   const headers = { Authorization: bearer };
   const apiUrl = submitMeetingApiUrl("/");
-  const response = await post(apiUrl,{ ...meetingData}, headers);
+  const response = await post(apiUrl, { ...meetingData }, headers);
   return response;
 };
 
@@ -92,7 +92,7 @@ const userData = async (user) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const headers = { Authorization: bearer };
-  const apiUrl = userApiUrl ("/");
+  const apiUrl = userApiUrl("/");
   const response = await get(apiUrl, headers);
   return response;
 };
@@ -111,7 +111,15 @@ const submitSignatureData = async (meetingId, userId) => {
   const bearer = "Bearer " + token;
   const headers = { Authorization: bearer };
   const apiUrl = signApiUrl("/");
-  const response = await post(apiUrl,{ meetingId, userId}, headers);
+  const response = await post(apiUrl, { meetingId, userId }, headers);
+  return response;
+};
+const getSignedNoteData = async () => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = signApiUrl("/");
+  const response = await get(apiUrl, headers);
   return response;
 };
 
@@ -125,5 +133,6 @@ export default {
   submitMeetingData,
   userData,
   mySupervisions,
-  submitSignatureData
+  submitSignatureData,
+  getSignedNoteData,
 };
