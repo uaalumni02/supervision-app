@@ -58,7 +58,7 @@ const Header = () => {
           aria-label="menu"
           href="/supervision"
         >
-          All Meetings
+          My Supervision
         </IconButton>
       )}
       <Box flexGrow={2} textAlign="right">

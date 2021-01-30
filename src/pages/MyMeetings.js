@@ -119,9 +119,11 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
+    if(signatureResponse) {
+      window.location.href = window.location.href
+    }
   };
-  //now I need route to get signed notes by using signNoteId and take first and last name and render to page; then if already signed dont sign again
-
+  
   const signedNoteData = async (event) => {
     const signedNoteResponse = await Api.getSignedNoteData();
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
