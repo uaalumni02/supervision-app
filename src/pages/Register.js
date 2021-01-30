@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Paper, Box, Link } from "@material-ui/core";
+import { Grid, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -102,7 +102,6 @@ const Register = () => {
   };
 
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Grid

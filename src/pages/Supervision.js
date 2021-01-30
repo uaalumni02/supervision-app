@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Grid, Box, Link } from "@material-ui/core";
+import React, { useEffect, useContext } from "react";
+import { Grid, Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -9,7 +9,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
 
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Api from "../data/api";
 
@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Supervision = () => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -125,17 +124,18 @@ const Supervision = () => {
               fontWeight={300}
               fontSize="h5.fontSize"
             >
-              <Typography variant="span">Supervisions</Typography>
+              <Typography variant="span">My Supervisions</Typography>
             </Box>
             <div className={classes.root}>
               <ul component="nav">
                 {globalState.supervisions &&
                   globalState.supervisions.map((meetingData) => (
                     <ul>
-                    <a href={"/myMeetings/" + `${meetingData._id}`}>
-                      {moment.unix(meetingData.date).format("MM-DD-YYYY") + '--' +
-                        meetingData.supervisionType.supervisionType}
-                    </a>
+                      <a href={"/myMeetings/" + `${meetingData._id}`}>
+                        {moment.unix(meetingData.date).format("MM-DD-YYYY") +
+                          "--" +
+                          meetingData.supervisionType.supervisionType}
+                      </a>
                     </ul>
                   ))}
               </ul>

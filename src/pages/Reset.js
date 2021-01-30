@@ -84,8 +84,6 @@ const UpdatePassword = () => {
   const [error, setError] = useState("");
   const [responseSuccess, setResponseSuccess] = useState("");
 
-  //   const { globalState, globalDispatch } = useContext(Context);
-
   const handleSubmit = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
@@ -96,14 +94,7 @@ const UpdatePassword = () => {
     };
 
     const reset = await Api.resetPassword(passwordData, id);
-    console.log(reset);
-    // if (reset.success) {
-    //   setResponseSuccess(reset.message);
-    //   return true;
-    // } else {
-    //   setError(reset.message);
-    //   return false;
-    // }
+
     if (!reset.success) {
       setError(reset.message);
       return false;
@@ -114,7 +105,6 @@ const UpdatePassword = () => {
   };
 
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Grid

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Box,
@@ -24,19 +24,10 @@ import Avatar from "@material-ui/core/Avatar";
 
 import Api from "../data/api";
 
-import {
-  FormControl,
-  Input,
-  InputLabel,
-  FormHelperText,
-} from "@material-ui/core";
+import { FormControl, InputLabel, FormHelperText } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
-
-
-
-import Context from "../store/context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,8 +99,6 @@ const Meeting = () => {
   const [unitId, setUnitId] = useState("");
   const [attendeeId, setAttendeeId] = useState([]);
 
-  const { globalState, globalDispatch } = useContext(Context);
-
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
     setSupervisionType(supervisionUnitResponse.supervision);
@@ -146,7 +135,6 @@ const Meeting = () => {
   };
 
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Grid

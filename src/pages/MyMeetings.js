@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Grid, Box, Link, FormControl } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -8,8 +8,6 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
-
-import { Redirect, useHistory } from "react-router-dom";
 
 import Api from "../data/api";
 
@@ -119,11 +117,12 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
-    if(signatureResponse) {
-      window.location.href = window.location.href
+    console.log(signatureResponse);
+    if (signatureResponse) {
+      window.location.href = window.location.href;
     }
   };
-  
+
   const signedNoteData = async (event) => {
     const signedNoteResponse = await Api.getSignedNoteData();
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
@@ -170,7 +169,11 @@ const MySupervision = () => {
               </p>
             ))}
             <p>
-              Signed: <p className="signature"> {noteSignedFirstName} {noteSignedLastName}</p>
+              Signed:{" "}
+              <p className="signature">
+                {" "}
+                {noteSignedFirstName} {noteSignedLastName}
+              </p>
             </p>
 
             <div>
