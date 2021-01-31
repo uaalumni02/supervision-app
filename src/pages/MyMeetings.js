@@ -87,7 +87,7 @@ const MySupervision = () => {
   const [userAttended, setUserAttended] = useState(false);
   const [userId, setUserId] = useState("");
   const [noteSignedFirstName, setNoteSignedFirstName] = useState("");
-  const [noteSignedLastName, setNoteSignedLastName] = useState("");
+  const [noteSignedLastName, setNoteSignedLastName] = useState("");;
   const { globalState, globalDispatch } = useContext(Context);
 
   const fetchMeetingData = async (event) => {
@@ -117,17 +117,20 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
-    console.log(signatureResponse);
     if (signatureResponse) {
       window.location.href = window.location.href;
     }
   };
 
   const signedNoteData = async (event) => {
+    const url = window.location.pathname;
+    const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signedNoteResponse = await Api.getSignedNoteData();
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
-      setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
-      setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
+      if (meetingId == signedNoteResponse.data[i].meetingId._id) {
+        setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
+        setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
+      }
     }
   };
   return (
