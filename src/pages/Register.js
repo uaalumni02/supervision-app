@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Grid, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
@@ -77,6 +78,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [registered, setRegistered] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -93,6 +95,8 @@ const Register = () => {
     if (!registerResponse.success) {
       setError(registerResponse.message);
       return false;
+    } else {
+      setRegistered(true);
     }
 
     const { token, userId } = registerResponse.userdata;
@@ -111,6 +115,7 @@ const Register = () => {
       direction="column"
       alignItems="center"
     >
+      {registered ? <Redirect to="/supervision" /> : ""}
       <Grid item xs={4} md={4}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>

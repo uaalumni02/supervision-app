@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Box } from "@material-ui/core";
+import { Grid, Box, Link } from "@material-ui/core";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -156,6 +156,11 @@ const RequestToken = () => {
                 </Button>
               </FormControl>
             </form>
+            <Typography>
+              <Link href="/" color="inherit">
+                Return to log in
+              </Link>
+            </Typography>
           </CardContent>
         </Card>
       </Grid>

@@ -13,6 +13,8 @@ import {
   Chip,
 } from "@material-ui/core";
 
+import { Redirect } from "react-router-dom";
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
@@ -99,6 +101,8 @@ const Meeting = () => {
   const [unitId, setUnitId] = useState("");
   const [attendeeId, setAttendeeId] = useState([]);
 
+  const [meetingSuccess, setMeetingSuccess] = useState(false);
+
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
     setSupervisionType(supervisionUnitResponse.supervision);
@@ -132,6 +136,7 @@ const Meeting = () => {
       units: unitId,
       supervisionType: supervisionTypeId,
     });
+    setMeetingSuccess(true)
   };
 
   const classes = useStyles();
@@ -144,6 +149,7 @@ const Meeting = () => {
       direction="column"
       alignItems="center"
     >
+      {meetingSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
@@ -268,12 +274,6 @@ const Meeting = () => {
                 />
               </form>
               <br></br>
-              {/* <TextareaAutosize
-                rowsMax={4}
-                aria-label="maximum height"
-                placeholder="Maximum 4 rows"
-                onChange={(e) => setContent(e.target.value)}
-              /> */}
               <TextField
                 id="outlined-multiline-static"
                 multiline

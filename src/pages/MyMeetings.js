@@ -88,6 +88,11 @@ const MySupervision = () => {
   const [userId, setUserId] = useState("");
   const [noteSignedFirstName, setNoteSignedFirstName] = useState("");
   const [noteSignedLastName, setNoteSignedLastName] = useState("");;
+
+
+  const [noteSigned, setNoteSigned] = useState(false);
+
+
   const { globalState, globalDispatch } = useContext(Context);
 
   const fetchMeetingData = async (event) => {
@@ -130,6 +135,7 @@ const MySupervision = () => {
       if (meetingId == signedNoteResponse.data[i].meetingId._id) {
         setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
         setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
+        setNoteSigned(true)
       }
     }
   };
@@ -180,7 +186,7 @@ const MySupervision = () => {
             </p>
 
             <div>
-              {userAttended ? (
+              {!noteSigned ? (
                 <Button
                   variant="contained"
                   size="large"
