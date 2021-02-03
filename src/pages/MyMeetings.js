@@ -130,14 +130,10 @@ const MySupervision = () => {
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signedNoteResponse = await Api.getSignedNoteData();
 
-
     setSignedNoteResponse(signedNoteResponse.data);
 
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
-      if (meetingId == signedNoteResponse.data[i].meetingId._id) {
-        // console.log(signedNoteResponse.data) //both users are here as they have signed
-        // setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
-        // setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
+      if (globalState.userId === signedNoteResponse.data[i].userId._id) {
         setNoteSigned(true);
       }
     }
@@ -191,17 +187,17 @@ const MySupervision = () => {
             ))}
 
             <div>
-              {/* {!noteSigned ? ( */}
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                className={classes.form.signButton}
-                onClick={signNote}
-              >
-                Sign
-              </Button>
-              {/* ) : null} */}
+              {!noteSigned ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  className={classes.form.signButton}
+                  onClick={signNote}
+                >
+                  Sign
+                </Button>
+              ) : null}
             </div>
           </CardContent>
         </Card>
