@@ -91,18 +91,19 @@ const Register = () => {
       email,
     };
     const registerResponse = await Api.register(user);
-
     if (!registerResponse.success) {
       setError(registerResponse.message);
       return false;
     } else {
       setRegistered(true);
+      window.location.href = window.location.href;
     }
 
     const { token, userId } = registerResponse.userdata;
 
     LocalStorage.save("token", token);
     LocalStorage.save("user", userId);
+
   };
 
   const classes = useStyles();
@@ -115,7 +116,7 @@ const Register = () => {
       direction="column"
       alignItems="center"
     >
-      {registered ? <Redirect to="/supervision" /> : ""}
+      {/* {registered ? <Redirect to="/supervision" /> : ""} */}
       <Grid item xs={4} md={4}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>

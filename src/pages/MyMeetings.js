@@ -15,6 +15,7 @@ import Context from "../store/context";
 import * as moment from "moment";
 
 import "../static/myMeeting.css";
+import { Block } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,13 +88,10 @@ const MySupervision = () => {
   const [userAttended, setUserAttended] = useState(false);
   const [userId, setUserId] = useState("");
   const [noteSignedFirstName, setNoteSignedFirstName] = useState("");
-  const [noteSignedLastName, setNoteSignedLastName] = useState("");;
-
-
+  const [noteSignedLastName, setNoteSignedLastName] = useState("");
   const [noteSigned, setNoteSigned] = useState(false);
-
-
   const { globalState, globalDispatch } = useContext(Context);
+
 
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
@@ -104,9 +102,11 @@ const MySupervision = () => {
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
     setUnits(meetingResponse.data.units.unit);
     setContent(meetingResponse.data.content);
-
+    // console.log(meetingResponse)
+    setUserId(globalState.userId)
     for (let i = 0; i < meetingResponse.data.attendees.length; i++) {
-      setUserId(meetingResponse.data.attendees[i]._id);
+      // setUserId(meetingResponse.data.attendees[i]._id);
+      // console.log(meetingResponse.data.attendees[i]._id) returns both ID's of people that attended
       if (meetingResponse.data.attendees[i]._id === globalState.userId) {
         setUserAttended(true);
       }
@@ -131,11 +131,13 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signedNoteResponse = await Api.getSignedNoteData();
+    console.log(signedNoteResponse.data)
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
+      // console.log("signed note response",signedNoteResponse.data[i])
       if (meetingId == signedNoteResponse.data[i].meetingId._id) {
         setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
         setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
-        setNoteSigned(true)
+        setNoteSigned(true);
       }
     }
   };
@@ -172,21 +174,23 @@ const MySupervision = () => {
             <p> Meeting Type: {supervisionType}</p>
             <p>Mintues: {units}</p>
             <p>Content: {content}</p>
+
+            <p> Attendee(s): </p>
             {attendees.map((names) => (
               <p>
-                Attendee(s): {names.firstName} {names.lastName}
+                {names.firstName} {names.lastName},
               </p>
             ))}
             <p>
               Signed:{" "}
               <p className="signature">
                 {" "}
-                {noteSignedFirstName} {noteSignedLastName}
+                {noteSignedFirstName} {noteSignedLastName} 
               </p>
             </p>
 
             <div>
-              {!noteSigned ? (
+              {/* {!noteSigned ? ( */}
                 <Button
                   variant="contained"
                   size="large"
@@ -196,7 +200,7 @@ const MySupervision = () => {
                 >
                   Sign
                 </Button>
-              ) : null}
+              {/* ) : null} */}
             </div>
           </CardContent>
         </Card>

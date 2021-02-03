@@ -13,6 +13,7 @@ import MyMeetings from "./pages/MyMeetings"
 
 import GlobalStateProvider from "./store/GlobalStateProvider";
 
+
 function App() {
   return (
     <GlobalStateProvider>
@@ -27,8 +28,6 @@ function App() {
             <Route exact path="/meeting" component={Meeting} />
             <Route exact path="/myMeetings/:id" component={MyMeetings} />
           </Switch>
-          {/* <UserContextProvider> */}
-          {/* </UserContextProvider> */}
         </BrowserRouter>
       </Layout>
     </GlobalStateProvider>
