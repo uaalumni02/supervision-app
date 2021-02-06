@@ -82,7 +82,6 @@ const Supervision = () => {
 
   useEffect(() => {
     if (!globalState.isLoggedIn) {
-      // history.push("/");
     } else {
       fetchMeetingData();
     }
@@ -91,7 +90,7 @@ const Supervision = () => {
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
     const supervisions = meetingResponse;
-
+    console.log(supervisions);
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
       payload: supervisions.data,

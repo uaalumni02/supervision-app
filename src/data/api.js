@@ -1,4 +1,5 @@
-import { post, get } from "../utils/fetch";
+import { post, get, deleteMeeting } from "../utils/fetch";
+
 import settings from "../config/configData";
 
 const makeApiUrl = (path) => {
@@ -30,6 +31,10 @@ const meetingIdUrl = (path) => {
 
 const signApiUrl = () => {
   return `${settings.apiBaseUrl}/api/approval`;
+};
+
+const deleteMeetingApiUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/meeting${path}`;
 };
 
 const login = async (username, password) => {
@@ -123,6 +128,15 @@ const getSignedNoteData = async () => {
   return response;
 };
 
+const deleteSupervisions = async (id) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = deleteMeetingApiUrl("/" + id);
+  const response = await deleteMeeting(apiUrl, headers);
+  return response;
+};
+
 export default {
   login,
   register,
@@ -135,4 +149,5 @@ export default {
   mySupervisions,
   submitSignatureData,
   getSignedNoteData,
+  deleteSupervisions,
 };

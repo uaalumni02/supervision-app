@@ -5,15 +5,13 @@ export const post = async (url, body, header = {}) => {
     method: "post",
     headers: {
       "Content-Type": "application/json",
-      ...header
+      ...header,
     },
     body: JSON.stringify(body),
   });
   const responseJson = await res.json();
   return responseJson;
 };
-
-
 
 export const get = async (url, headers = {}) => {
   const res = await fetch(url, {
@@ -23,4 +21,14 @@ export const get = async (url, headers = {}) => {
   const responseJson = await res.json();
   return responseJson;
 };
+
+export const deleteMeeting = async (url, headers = {}) => {
+  const res = await fetch(url, {
+    method: "delete",
+    headers,
+  });
+  const responseJson = await res.json();
+  return responseJson;
+};
+
 

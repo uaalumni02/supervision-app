@@ -145,6 +145,14 @@ const MySupervision = () => {
       }
     }
   };
+
+  const deleteMeeting = async () => {
+    const url = window.location.pathname;
+    const id = url.substring(url.lastIndexOf("/") + 1);
+    const deleteResponse = await Api.deleteSupervisions(id);
+    console.log(deleteResponse);
+  };
+
   return (
     <Grid
       container
@@ -212,6 +220,7 @@ const MySupervision = () => {
                   size="large"
                   color="primary"
                   className={classes.form.deleteButton}
+                  onClick={deleteMeeting}
                 >
                   Delete
                 </Button>
