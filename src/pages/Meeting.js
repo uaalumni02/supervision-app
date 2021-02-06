@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Grid,
   Box,
@@ -27,6 +27,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Api from "../data/api";
 
 import { FormControl, InputLabel, FormHelperText } from "@material-ui/core";
+
+import Context from "../store/context";
 
 import { makeStyles } from "@material-ui/core/styles";
 import avatar from "../assets/avatar.png";
@@ -103,6 +105,8 @@ const Meeting = () => {
 
   const [meetingSuccess, setMeetingSuccess] = useState(false);
 
+  const { globalState, globalDispatch } = useContext(Context);
+
   const fetchSupervisionUnitData = async (event) => {
     const supervisionUnitResponse = await Api.supervisionUnits();
     setSupervisionType(supervisionUnitResponse.supervision);
@@ -135,8 +139,9 @@ const Meeting = () => {
       attendees: attendeeId,
       units: unitId,
       supervisionType: supervisionTypeId,
+      creator: globalState.userId,
     });
-    setMeetingSuccess(true)
+    setMeetingSuccess(true);
   };
 
   const classes = useStyles();

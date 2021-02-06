@@ -15,7 +15,6 @@ import Context from "../store/context";
 import * as moment from "moment";
 
 import "../static/myMeeting.css";
-import { Block } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#3f51b5",
       color: "#fff",
     },
+    deleteButton: {
+      backgroundColor: "#3f51b5",
+      color: "#fff",
+    },
     error: {
       color: "red",
     },
@@ -87,8 +90,6 @@ const MySupervision = () => {
   const [attendees, setAttendees] = useState([]);
   const [userAttended, setUserAttended] = useState(false);
   const [userId, setUserId] = useState("");
-  // const [noteSignedFirstName, setNoteSignedFirstName] = useState("");
-  // const [noteSignedLastName, setNoteSignedLastName] = useState("");
   const [noteSigned, setNoteSigned] = useState(false);
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -98,6 +99,7 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
+    console.log(meetingResponse);
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
@@ -198,6 +200,15 @@ const MySupervision = () => {
                   Sign
                 </Button>
               ) : null}
+              &nbsp;&nbsp;&nbsp;
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                className={classes.form.deleteButton}
+              >
+                Delete
+              </Button>
             </div>
           </CardContent>
         </Card>

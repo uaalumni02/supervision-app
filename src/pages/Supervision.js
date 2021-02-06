@@ -82,7 +82,7 @@ const Supervision = () => {
 
   useEffect(() => {
     if (!globalState.isLoggedIn) {
-      history.push("/");
+      // history.push("/");
     } else {
       fetchMeetingData();
     }
