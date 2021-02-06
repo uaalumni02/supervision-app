@@ -95,11 +95,13 @@ const MySupervision = () => {
 
   const [signedNoteResponse, setSignedNoteResponse] = useState([]);
 
+  const [creator, setCreator] = useState(false);
+
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
-    console.log(meetingResponse);
+
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
@@ -110,6 +112,9 @@ const MySupervision = () => {
       if (meetingResponse.data.attendees[i]._id === globalState.userId) {
         setUserAttended(true);
       }
+    }
+    if (meetingResponse.data.creator._id === globalState.userId) {
+      setCreator(true);
     }
   };
 
@@ -201,14 +206,16 @@ const MySupervision = () => {
                 </Button>
               ) : null}
               &nbsp;&nbsp;&nbsp;
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                className={classes.form.deleteButton}
-              >
-                Delete
-              </Button>
+              {creator ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  className={classes.form.deleteButton}
+                >
+                  Delete
+                </Button>
+              ) : null}
             </div>
           </CardContent>
         </Card>
