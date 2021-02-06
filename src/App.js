@@ -10,6 +10,7 @@ import RequestToken from "./pages/RequestToken";
 import Reset from "./pages/Reset";
 import Meeting from "./pages/Meeting";
 import MyMeetings from "./pages/MyMeetings"
+import EditMeeting from "./pages/EditMeeting"
 
 import GlobalStateProvider from "./store/GlobalStateProvider";
 
@@ -27,6 +28,7 @@ function App() {
             <Route exact path="/reset/:id" component={Reset} />
             <Route exact path="/meeting" component={Meeting} />
             <Route exact path="/myMeetings/:id" component={MyMeetings} />
+            <Route exact path="/edit/:id" component={EditMeeting} />
           </Switch>
         </BrowserRouter>
       </Layout>

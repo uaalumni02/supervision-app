@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
@@ -100,6 +100,8 @@ const MySupervision = () => {
 
   const [deleteSuccess, setDeleteSuccess] = useState(false);
 
+  const history = useHistory();
+
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
@@ -156,6 +158,12 @@ const MySupervision = () => {
     if (deleteResponse.success) {
       setDeleteSuccess(true);
     }
+  };
+
+  const editMeeting = () => {
+    const url = window.location.pathname;
+    const id = url.substring(url.lastIndexOf("/") + 1);
+    history.push("/edit/" + id);
   };
 
   return (
@@ -229,6 +237,18 @@ const MySupervision = () => {
                   onClick={deleteMeeting}
                 >
                   Delete
+                </Button>
+              ) : null}
+              &nbsp;&nbsp;&nbsp;
+              {creator ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  className={classes.form.signButton}
+                  onClick={editMeeting}
+                >
+                  Edit
                 </Button>
               ) : null}
             </div>
