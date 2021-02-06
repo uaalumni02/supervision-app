@@ -98,22 +98,17 @@ const Register = () => {
       return false;
     } else {
       setRegistered(true);
-      history.push('/supervision')
-      // window.location.href = window.location.href;
+      history.push("/supervision");
     }
 
     const { token, userId } = registerResponse.userdata;
 
     LocalStorage.save("token", token);
     LocalStorage.save("user", userId);
-
   };
 
   const classes = useStyles();
 
-  // if (registered) {
-  //   return <Redirect to="/supervision" /> 
-  // }
   return (
     <Grid
       container
@@ -122,7 +117,6 @@ const Register = () => {
       direction="column"
       alignItems="center"
     >
-      {/* {registered ? : null } */}
       <Grid item xs={4} md={4}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Grid, Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Supervision = () => {
   const classes = useStyles();
+  const [myMeetings, setMyMeetings] = useState([]);
 
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -89,8 +90,13 @@ const Supervision = () => {
 
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
-    const supervisions = meetingResponse;
-    console.log(supervisions);
+    let supervisions = meetingResponse;
+
+    supervisions = meetingResponse.data.filter((el) => {
+      return !el.isDeleted;
+    });
+    setMyMeetings(supervisions);
+
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
       payload: supervisions.data,
@@ -127,16 +133,15 @@ const Supervision = () => {
             </Box>
             <div className={classes.root}>
               <ul component="nav">
-                {globalState.supervisions &&
-                  globalState.supervisions.map((meetingData) => (
-                    <ul>
-                      <a href={"/myMeetings/" + `${meetingData._id}`}>
-                        {moment.unix(meetingData.date).format("MM-DD-YYYY") +
-                          "--" +
-                          meetingData.supervisionType.supervisionType}
-                      </a>
-                    </ul>
-                  ))}
+                {myMeetings.map((meetingData) => (
+                  <ul>
+                    <a href={"/myMeetings/" + `${meetingData._id}`}>
+                      {moment.unix(meetingData.date).format("MM-DD-YYYY") +
+                        "--" +
+                        meetingData.supervisionType.supervisionType}
+                    </a>
+                  </ul>
+                ))}
               </ul>
             </div>
           </CardContent>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
@@ -97,6 +98,8 @@ const MySupervision = () => {
 
   const [creator, setCreator] = useState(false);
 
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
   const fetchMeetingData = async (event) => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
@@ -150,7 +153,9 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const deleteResponse = await Api.deleteSupervisions(id);
-    console.log(deleteResponse);
+    if (deleteResponse.success) {
+      setDeleteSuccess(true);
+    }
   };
 
   return (
@@ -161,6 +166,7 @@ const MySupervision = () => {
       direction="column"
       alignItems="center"
     >
+      {deleteSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
