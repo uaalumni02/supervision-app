@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import moment from "moment";
 import {
   Box,
   FormLabel,
@@ -108,6 +109,7 @@ const EditMeeting = () => {
   const [defaultUnits, setDefaultUnits] = useState("");
   const [defaultContent, setDefaultContent] = useState("");
   const [defaultAttendees, setDefaultAttendees] = useState("");
+  const [defaultDate, setDefaultDate] = useState("");
 
   const classes = useStyles();
 
@@ -117,15 +119,16 @@ const EditMeeting = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingToEdit = await Api.mySupervisions(id);
-    // console.log("-----", meetingToEdit.data.attendees);
 
+    console.log("dddd", meetingToEdit.data.date);
+    setDate(meetingToEdit.data.date);
     setDefaultContent(meetingToEdit.data.content);
-    setDefaultSupervisionType(meetingToEdit.data.supervisionType._id);
+    // setDefaultSupervisionType(meetingToEdit.data.supervisionType._id);
+    setSupervisionTypeId(meetingToEdit.data.supervisionType._id);
     setDefaultUnits(meetingToEdit.data.units._id);
 
     for (var i = 0; i < meetingToEdit.data.attendees.length; i++) {
-      console.log(meetingToEdit.data.attendees[i].firstName);
-      setDefaultAttendees(meetingToEdit.data.attendees[i].firstName)
+      setDefaultAttendees(meetingToEdit.data.attendees[i].firstName);
     }
   };
 
@@ -134,6 +137,7 @@ const EditMeeting = () => {
     setSupervisionType(supervisionUnitResponse.supervision);
     setUnits(supervisionUnitResponse.units);
   };
+
   const fetchUser = async () => {
     const userResponse = await Api.userData();
     setAttendees(userResponse.data);
@@ -165,7 +169,7 @@ const EditMeeting = () => {
     });
     setMeetingSuccess(true);
   };
-
+  
   return (
     <Grid
       container
@@ -197,8 +201,14 @@ const EditMeeting = () => {
             <form>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
-                <RadioGroup row aria-label="position" defaultValue="top">
+                <RadioGroup
+                  row
+                  aria-label="position"
+                  defaultValue="top"
+                  value={supervisionTypeId}
+                >
                   {supervisionType.map((supervision) => {
+                    let checked = defaultSupervisionType === supervision._id;
                     return (
                       <FormControlLabel
                         key={supervision._id}
@@ -207,8 +217,10 @@ const EditMeeting = () => {
                         label={supervision.supervisionType}
                         labelPlacement="start"
                         name="supervision"
-                        checked={defaultSupervisionType === supervision._id}
+                        // checked={checked}
+                        // defaultChecked checked={defaultSupervisionType}
                         onChange={(e) => {
+                          console.log("getting here");
                           setSupervisionTypeId(e.target.value);
                         }}
                       />
@@ -291,6 +303,7 @@ const EditMeeting = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={moment.unix(date).format("YYYY-MM-DDThh:mm")}
                 onChange={(e) => setDate(e.target.value)}
               />
             </form>
@@ -300,7 +313,7 @@ const EditMeeting = () => {
               multiline
               rows={10}
               variant="outlined"
-              value={defaultContent}
+              defaultValue={defaultContent}
               onChange={(e) => setContent(e.target.value)}
             />
 
