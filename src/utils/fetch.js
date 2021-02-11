@@ -32,3 +32,15 @@ export const deleteMeeting = async (url, headers = {}) => {
 };
 
 
+export const patch = async (url, body, header = {}) => {
+  const res = await fetch(url, {
+    method: "patch",
+    headers: {
+      "Content-Type": "application/json",
+      ...header,
+    },
+    body: JSON.stringify(body),
+  });
+  const responseJson = await res.json();
+  return responseJson;
+};

@@ -1,4 +1,4 @@
-import { post, get, deleteMeeting } from "../utils/fetch";
+import { post, get, deleteMeeting, patch } from "../utils/fetch";
 
 import settings from "../config/configData";
 
@@ -36,6 +36,13 @@ const signApiUrl = () => {
 const deleteMeetingApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/meeting${path}`;
 };
+const supervisionUnitsApiUrl = () => {
+  return `${settings.apiBaseUrl}/api/supervisionUnits`;
+};
+
+const editMeetingApiUrl = (path) => {
+  return `${settings.apiBaseUrl}/api/meeting${path}`;
+};
 
 const login = async (username, password) => {
   const apiUrl = makeApiUrl("/login");
@@ -52,9 +59,6 @@ const register = async (user) => {
   return response;
 };
 
-const supervisionUnitsApiUrl = () => {
-  return `${settings.apiBaseUrl}/api/supervisionUnits`;
-};
 
 const supervision = async (user) => {
   const token = localStorage.getItem("token");
@@ -137,6 +141,15 @@ const deleteSupervisions = async (id) => {
   return response;
 };
 
+const editMeetingData = async (meetingData, id) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const headers = { Authorization: bearer };
+  const apiUrl = editMeetingApiUrl("/" + '601ffd6134bac70435fe047a');
+  const response = await patch(apiUrl, { ...meetingData }, headers);
+  return response;
+};
+
 export default {
   login,
   register,
@@ -150,4 +163,5 @@ export default {
   submitSignatureData,
   getSignedNoteData,
   deleteSupervisions,
+  editMeetingData
 };

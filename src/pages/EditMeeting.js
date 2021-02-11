@@ -96,8 +96,8 @@ const useStyles = makeStyles((theme) => ({
 const EditMeeting = () => {
   const [supervisionType, setSupervisionType] = useState([]);
   const [units, setUnits] = useState([]);
-  const [attendees, setAttendees] = useState([]);
-  const [attendeeId, setAttendeeId] = useState([]);
+  const [attendees, setAttendees] = useState([]); // List of all users
+  const [attendeeId, setAttendeeId] = useState([]); // List of IDs all users who attended a meeting
   const [numberOfAttendees, setNumberOfAttendees] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
@@ -105,11 +105,8 @@ const EditMeeting = () => {
   const [supervisionTypeId, setSupervisionTypeId] = useState("");
   const [meetingSuccess, setMeetingSuccess] = useState(false);
 
-  const [defaultSupervisionType, setDefaultSupervisionType] = useState("");
-  const [defaultUnits, setDefaultUnits] = useState("");
   const [defaultContent, setDefaultContent] = useState("");
   const [defaultAttendees, setDefaultAttendees] = useState("");
-  const [defaultDate, setDefaultDate] = useState("");
 
   const classes = useStyles();
 
@@ -120,16 +117,13 @@ const EditMeeting = () => {
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingToEdit = await Api.mySupervisions(id);
 
-    console.log("dddd", meetingToEdit.data.date);
+
     setDate(meetingToEdit.data.date);
     setDefaultContent(meetingToEdit.data.content);
-    // setDefaultSupervisionType(meetingToEdit.data.supervisionType._id);
     setSupervisionTypeId(meetingToEdit.data.supervisionType._id);
-    setDefaultUnits(meetingToEdit.data.units._id);
+    setUnitId(meetingToEdit.data.units._id);
 
-    for (var i = 0; i < meetingToEdit.data.attendees.length; i++) {
-      setDefaultAttendees(meetingToEdit.data.attendees[i].firstName);
-    }
+    setAllDefaultAttendees(meetingToEdit.data.attendees)
   };
 
   const fetchSupervisionUnitData = async (event) => {
@@ -149,6 +143,15 @@ const EditMeeting = () => {
     fetchUser();
   }, []);
 
+  const setAllDefaultAttendees = (listOfAttendees) => {
+                            // attendeeId - Array of ids of the attendees of a meeting, default value for select
+                          // attendees - array containing data of all users
+
+    setNumberOfAttendees(listOfAttendees.length);
+    const attendeesIDs = listOfAttendees.map(att => att._id )
+    setAttendeeId(attendeesIDs)
+  }
+
   const setAttendeesOnChange = (e) => {
     const selectedValues = e.target.value;
     const attendeeNumber = selectedValues.length;
@@ -157,8 +160,11 @@ const EditMeeting = () => {
   };
 
   const handleSubmit = async (event) => {
+    // const url = window.location.pathname;
+    // const id = url.substring(url.lastIndexOf("/") + 1);
+    //hard coding Id
     event.preventDefault();
-    const meetingResponse = await Api.submitMeetingData({
+    const editMeetingResponse = await Api.editMeetingData({
       numberOfAttendees,
       date,
       content,
@@ -168,8 +174,9 @@ const EditMeeting = () => {
       creator: globalState.userId,
     });
     setMeetingSuccess(true);
+    console.log(editMeetingResponse)
   };
-  
+
   return (
     <Grid
       container
@@ -208,7 +215,6 @@ const EditMeeting = () => {
                   value={supervisionTypeId}
                 >
                   {supervisionType.map((supervision) => {
-                    let checked = defaultSupervisionType === supervision._id;
                     return (
                       <FormControlLabel
                         key={supervision._id}
@@ -217,10 +223,7 @@ const EditMeeting = () => {
                         label={supervision.supervisionType}
                         labelPlacement="start"
                         name="supervision"
-                        // checked={checked}
-                        // defaultChecked checked={defaultSupervisionType}
                         onChange={(e) => {
-                          console.log("getting here");
                           setSupervisionTypeId(e.target.value);
                         }}
                       />
@@ -233,7 +236,12 @@ const EditMeeting = () => {
             <form>
               <FormControl component="fieldset">
                 <FormLabel component="legend"></FormLabel>
-                <RadioGroup row aria-label="position" defaultValue="top">
+                <RadioGroup
+                  row
+                  aria-label="position"
+                  defaultValue="top"
+                  value={unitId}
+                >
                   {units.map((supervisionUnit) => {
                     return (
                       <FormControlLabel
@@ -243,7 +251,6 @@ const EditMeeting = () => {
                         label={supervisionUnit.unit}
                         labelPlacement="start"
                         name="supervisionUnit"
-                        checked={defaultUnits === supervisionUnit._id}
                         onChange={(e) => {
                           setUnitId(e.target.value);
                         }}
@@ -269,7 +276,7 @@ const EditMeeting = () => {
                           const selectedAttendee = attendees.find((person) => {
                             return person._id === id;
                           });
-
+  
                           return (
                             <Chip
                               key={selectedAttendee._id}
@@ -304,7 +311,11 @@ const EditMeeting = () => {
                   shrink: true,
                 }}
                 value={moment.unix(date).format("YYYY-MM-DDThh:mm")}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  const a = moment(e.target.value, 'YYYY-MM-DDThh:mm').unix()
+                  console.log(a)
+                  setDate(a)
+                }}
               />
             </form>
             <br></br>
