@@ -17,6 +17,8 @@ import * as moment from "moment";
 
 import "../static/myMeeting.css";
 
+import Modal from "../components/common/Header/Modal";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 370,
@@ -98,8 +100,6 @@ const MySupervision = () => {
 
   const [creator, setCreator] = useState(false);
 
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-
   const history = useHistory();
 
   const fetchMeetingData = async (event) => {
@@ -151,15 +151,6 @@ const MySupervision = () => {
     }
   };
 
-  const deleteMeeting = async () => {
-    const url = window.location.pathname;
-    const id = url.substring(url.lastIndexOf("/") + 1);
-    const deleteResponse = await Api.deleteSupervisions(id);
-    if (deleteResponse.success) {
-      setDeleteSuccess(true);
-    }
-  };
-
   const editMeeting = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
@@ -174,7 +165,6 @@ const MySupervision = () => {
       direction="column"
       alignItems="center"
     >
-      {deleteSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
@@ -214,7 +204,6 @@ const MySupervision = () => {
                 {sign.userId.firstName} {sign.userId.lastName}
               </p>
             ))}
-
             <div>
               {!noteSigned ? (
                 <Button
@@ -227,19 +216,7 @@ const MySupervision = () => {
                   Sign
                 </Button>
               ) : null}
-              &nbsp;&nbsp;&nbsp;
-              {creator ? (
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  className={classes.form.deleteButton}
-                  onClick={deleteMeeting}
-                >
-                  Delete
-                </Button>
-              ) : null}
-              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
               {creator ? (
                 <Button
                   variant="contained"
@@ -252,6 +229,7 @@ const MySupervision = () => {
                 </Button>
               ) : null}
             </div>
+            {creator ? <Modal /> : null}
           </CardContent>
         </Card>
       </Grid>
