@@ -69,6 +69,8 @@ const SimpleModal = () => {
       >
         Delete
       </Button>
+      <br></br>
+      <a href={"/supervision/"}>return my supervions</a>
     </div>
   );
 
