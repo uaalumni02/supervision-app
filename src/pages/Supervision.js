@@ -91,7 +91,6 @@ const Supervision = () => {
   const fetchMeetingData = async (event) => {
     const meetingResponse = await Api.supervision(globalState.userId);
     let supervisions = meetingResponse;
-
     supervisions = meetingResponse.data.filter((el) => {
       return !el.isDeleted;
     });

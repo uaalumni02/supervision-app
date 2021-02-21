@@ -97,6 +97,7 @@ const MySupervision = () => {
   const { globalState, globalDispatch } = useContext(Context);
 
   const [signedNoteResponse, setSignedNoteResponse] = useState([]);
+  const [error, setError] = useState("");
 
   const [creator, setCreator] = useState(false);
 
@@ -106,7 +107,10 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
-
+    if (!meetingResponse.success) {
+      setError(meetingResponse.message);
+      return false;
+    }
     setAttendees(meetingResponse.data.attendees);
     setMeetingDate(meetingResponse.data.date);
     setSupervisionType(meetingResponse.data.supervisionType.supervisionType);
@@ -122,6 +126,7 @@ const MySupervision = () => {
       setCreator(true);
     }
   };
+
 
   useEffect(() => {
     fetchMeetingData();
@@ -165,6 +170,7 @@ const MySupervision = () => {
       direction="column"
       alignItems="center"
     >
+      <h1>{error}</h1>
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>

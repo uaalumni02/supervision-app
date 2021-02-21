@@ -117,6 +117,7 @@ const EditMeeting = () => {
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingToEdit = await Api.mySupervisions(id);
 
+    // check if user is creator compare user ID with creator Id
 
     setDate(meetingToEdit.data.date);
     setDefaultContent(meetingToEdit.data.content);

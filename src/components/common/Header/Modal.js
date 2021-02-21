@@ -70,7 +70,7 @@ const SimpleModal = () => {
         Delete
       </Button>
       <br></br>
-      <a href={"/supervision/"}>return my supervions</a>
+      <a href={"/supervision/"}>return to my supervisions</a>
     </div>
   );
 
