@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Layout from "./Layout";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Supervision from "./pages/Supervision";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Supervision from "./pages/supervision";
 import RequestToken from "./pages/RequestToken";
 import Reset from "./pages/Reset";
-import Meeting from "./pages/Meeting";
-import MyMeetings from "./pages/MyMeetings"
-import EditMeeting from "./pages/EditMeeting"
+import Meeting from "./pages/meeting";
+import MyMeetings from "./pages/myMeetings"
+import EditMeeting from "./pages/editMeeting"
 
 import GlobalStateProvider from "./store/GlobalStateProvider";
 
