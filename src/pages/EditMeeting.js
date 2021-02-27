@@ -101,7 +101,6 @@ const EditMeeting = () => {
   const [attendeeId, setAttendeeId] = useState([]); 
   const [numberOfAttendees, setNumberOfAttendees] = useState("");
   const [date, setDate] = useState("");
-  const [content, setContent] = useState("");
   const [unitId, setUnitId] = useState("");
   const [supervisionTypeId, setSupervisionTypeId] = useState("");
   const [meetingSuccess, setMeetingSuccess] = useState(false);
@@ -161,7 +160,7 @@ const EditMeeting = () => {
     const editMeetingResponse = await Api.editMeetingData({
       numberOfAttendees,
       date,
-      content,
+      content: defaultContent,
       attendees: attendeeId,
       units: unitId,
       supervisionType: supervisionTypeId,
@@ -318,7 +317,7 @@ const EditMeeting = () => {
               rows={10}
               variant="outlined"
               defaultValue={defaultContent}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => setDefaultContent(e.target.value)}
             />
 
             <Box display="flex" alignItems="center" justifyContent="center">
