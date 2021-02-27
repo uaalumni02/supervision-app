@@ -1,4 +1,4 @@
-import { post, get, deleteMeeting, patch } from "../utils/fetch";
+import { post, get, deleteMeeting, patchMeeting } from "../utils/fetch";
 
 import settings from "../config/configData";
 
@@ -58,7 +58,6 @@ const register = async (user) => {
 
   return response;
 };
-
 
 const supervision = async (user) => {
   const token = localStorage.getItem("token");
@@ -141,12 +140,14 @@ const deleteSupervisions = async (id) => {
   return response;
 };
 
-const editMeetingData = async (meetingData, id) => {
+const editMeetingData = async (meetingData) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
+  const url = window.location.pathname;
+  const id = url.substring(url.lastIndexOf("/") + 1);
   const headers = { Authorization: bearer };
-  const apiUrl = editMeetingApiUrl("/" + '601ffd6134bac70435fe047a');
-  const response = await patch(apiUrl, { ...meetingData }, headers);
+  const apiUrl = editMeetingApiUrl("/" + id);
+  const response = await patchMeeting(apiUrl, { ...meetingData }, headers);
   return response;
 };
 
@@ -163,5 +164,5 @@ export default {
   submitSignatureData,
   getSignedNoteData,
   deleteSupervisions,
-  editMeetingData
+  editMeetingData,
 };

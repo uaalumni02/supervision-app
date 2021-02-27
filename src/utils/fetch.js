@@ -32,9 +32,9 @@ export const deleteMeeting = async (url, headers = {}) => {
 };
 
 
-export const patch = async (url, body, header = {}) => {
+export const patchMeeting = async (url, body, header = {}) => {
   const res = await fetch(url, {
-    method: "patch",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       ...header,

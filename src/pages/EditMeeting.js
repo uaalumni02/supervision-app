@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
+import { Redirect } from "react-router-dom";
 import {
   Box,
   FormLabel,
@@ -96,8 +97,8 @@ const useStyles = makeStyles((theme) => ({
 const EditMeeting = () => {
   const [supervisionType, setSupervisionType] = useState([]);
   const [units, setUnits] = useState([]);
-  const [attendees, setAttendees] = useState([]); // List of all users
-  const [attendeeId, setAttendeeId] = useState([]); // List of IDs all users who attended a meeting
+  const [attendees, setAttendees] = useState([]); 
+  const [attendeeId, setAttendeeId] = useState([]); 
   const [numberOfAttendees, setNumberOfAttendees] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
@@ -117,14 +118,12 @@ const EditMeeting = () => {
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingToEdit = await Api.mySupervisions(id);
 
-    // check if user is creator compare user ID with creator Id
-
     setDate(meetingToEdit.data.date);
     setDefaultContent(meetingToEdit.data.content);
     setSupervisionTypeId(meetingToEdit.data.supervisionType._id);
     setUnitId(meetingToEdit.data.units._id);
 
-    setAllDefaultAttendees(meetingToEdit.data.attendees)
+    setAllDefaultAttendees(meetingToEdit.data.attendees);
   };
 
   const fetchSupervisionUnitData = async (event) => {
@@ -145,13 +144,10 @@ const EditMeeting = () => {
   }, []);
 
   const setAllDefaultAttendees = (listOfAttendees) => {
-                            // attendeeId - Array of ids of the attendees of a meeting, default value for select
-                          // attendees - array containing data of all users
-
     setNumberOfAttendees(listOfAttendees.length);
-    const attendeesIDs = listOfAttendees.map(att => att._id )
-    setAttendeeId(attendeesIDs)
-  }
+    const attendeesIDs = listOfAttendees.map((att) => att._id);
+    setAttendeeId(attendeesIDs);
+  };
 
   const setAttendeesOnChange = (e) => {
     const selectedValues = e.target.value;
@@ -161,9 +157,6 @@ const EditMeeting = () => {
   };
 
   const handleSubmit = async (event) => {
-    // const url = window.location.pathname;
-    // const id = url.substring(url.lastIndexOf("/") + 1);
-    //hard coding Id
     event.preventDefault();
     const editMeetingResponse = await Api.editMeetingData({
       numberOfAttendees,
@@ -175,7 +168,6 @@ const EditMeeting = () => {
       creator: globalState.userId,
     });
     setMeetingSuccess(true);
-    console.log(editMeetingResponse)
   };
 
   return (
@@ -186,6 +178,7 @@ const EditMeeting = () => {
       direction="column"
       alignItems="center"
     >
+       {meetingSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
@@ -277,7 +270,7 @@ const EditMeeting = () => {
                           const selectedAttendee = attendees.find((person) => {
                             return person._id === id;
                           });
-  
+
                           return (
                             <Chip
                               key={selectedAttendee._id}
@@ -313,9 +306,8 @@ const EditMeeting = () => {
                 }}
                 value={moment.unix(date).format("YYYY-MM-DDThh:mm")}
                 onChange={(e) => {
-                  const a = moment(e.target.value, 'YYYY-MM-DDThh:mm').unix()
-                  console.log(a)
-                  setDate(a)
+                  const a = moment(e.target.value, "YYYY-MM-DDThh:mm").unix();
+                  setDate(a);
                 }}
               />
             </form>
