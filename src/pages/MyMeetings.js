@@ -98,6 +98,7 @@ const MySupervision = () => {
 
   const [noteSignedFirstName, setNoteSignedFirstName] = useState([]);
   const [noteSignedLastName, setNoteSignedLastName] = useState("");
+  const [signedUsers, setSignedUsers] = useState([]);
   // const [signedNoteResponse, setSignedNoteResponse] = useState([]);
   const [error, setError] = useState("");
 
@@ -109,7 +110,7 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingResponse = await Api.mySupervisions(id);
-    console.log(meetingResponse.data)
+    // console.log(meetingResponse.data);
     if (!meetingResponse.success) {
       setError(meetingResponse.message);
       return false;
@@ -139,7 +140,7 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signatureResponse = await Api.submitSignatureData(meetingId, userId);
-
+    console.log("-----",signatureResponse.data)
     if (signatureResponse) {
       window.location.href = window.location.href;
     }
@@ -149,7 +150,6 @@ const MySupervision = () => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
     const signedNoteResponse = await Api.getSignedNoteData();
-    // console.log("-----",signedNoteResponse)
     // setSignedNoteResponse(signedNoteResponse.data);
 
     // for (let i = 0; i < signedNoteResponse.data.length; i++) {
@@ -157,16 +157,23 @@ const MySupervision = () => {
     //     setNoteSigned(true);
     //   }
     // }
+    // 2 - 
+
+    const signUsers = [];
     for (let i = 0; i < signedNoteResponse.data.length; i++) {
+       const firstAndLastName = `${signedNoteResponse.data[i].userId.firstName} ${signedNoteResponse.data[i].userId.lastName}`;
+      
       if (
         globalState.userId === signedNoteResponse.data[i].userId._id &&
         meetingId == signedNoteResponse.data[i].meetingId._id
       ) {
-        setNoteSignedFirstName(signedNoteResponse.data[i].userId.firstName);
-        setNoteSignedLastName(signedNoteResponse.data[i].userId.lastName);
         setNoteSigned(true);
-      }
+      } 
+      
+      signUsers.push(firstAndLastName)
     }
+
+    setSignedUsers(signUsers)
   };
 
   const editMeeting = () => {
@@ -217,18 +224,18 @@ const MySupervision = () => {
               </p>
             ))}
 
-            {/* <p> Signed: </p>
-            {signedNoteResponse.map((sign) => (
+            <p> Signed: </p>
+            {signedUsers.map((sign) => (
               <p className="signature">
-                {sign.userId.firstName} {sign.userId.lastName}
+                {sign}
               </p>
-            ))} */}
+            ))}
             <p>
-              Signed:{" "}
+              {/* Signed:{" "}
               <p className="signature">
                 {" "}
-                {noteSignedFirstName} {noteSignedLastName}
-              </p>
+                {signedUsers.join(', ')}
+              </p> */}
             </p>
             <div>
               {!noteSigned ? (
