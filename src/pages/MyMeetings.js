@@ -129,8 +129,8 @@ const MySupervision = () => {
 
 
   useEffect(() => {
-    fetchMeetingData();
     signedNoteData();
+    fetchMeetingData();
   }, []);
 
   const signNote = async () => {
@@ -145,8 +145,7 @@ const MySupervision = () => {
   const signedNoteData = async (event) => {
     const url = window.location.pathname;
     const meetingId = url.substring(url.lastIndexOf("/") + 1);
-    const signedNoteResponse = await Api.getSignedNoteData();
-
+    const signedNoteResponse = await Api.getSignedNoteData(meetingId);
     setSignedNoteResponse(signedNoteResponse.data);
 
     for (let i = 0; i < signedNoteResponse.data.length; i++) {

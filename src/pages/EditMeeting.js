@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import {
   Box,
   FormLabel,
@@ -97,8 +97,8 @@ const useStyles = makeStyles((theme) => ({
 const EditMeeting = () => {
   const [supervisionType, setSupervisionType] = useState([]);
   const [units, setUnits] = useState([]);
-  const [attendees, setAttendees] = useState([]); 
-  const [attendeeId, setAttendeeId] = useState([]); 
+  const [attendees, setAttendees] = useState([]);
+  const [attendeeId, setAttendeeId] = useState([]);
   const [numberOfAttendees, setNumberOfAttendees] = useState("");
   const [date, setDate] = useState("");
   const [unitId, setUnitId] = useState("");
@@ -112,9 +112,9 @@ const EditMeeting = () => {
 
   const { globalState, globalDispatch } = useContext(Context);
 
+  const { id } = useParams();
+
   const fetchMeetingToEdit = async (event) => {
-    const url = window.location.pathname;
-    const id = url.substring(url.lastIndexOf("/") + 1);
     const meetingToEdit = await Api.mySupervisions(id);
 
     setDate(meetingToEdit.data.date);
@@ -177,7 +177,7 @@ const EditMeeting = () => {
       direction="column"
       alignItems="center"
     >
-       {meetingSuccess ? <Redirect to="/supervision/" /> : ""}
+      {meetingSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>

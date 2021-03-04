@@ -29,7 +29,7 @@ const meetingIdUrl = (path) => {
   return `${settings.apiBaseUrl}/api/meetingId${path}`;
 };
 
-const signApiUrl = () => {
+const signApiUrl = (path) => {
   return `${settings.apiBaseUrl}/api/approval`;
 };
 
@@ -122,11 +122,11 @@ const submitSignatureData = async (meetingId, userId) => {
   const response = await post(apiUrl, { meetingId, userId }, headers);
   return response;
 };
-const getSignedNoteData = async () => {
+const getSignedNoteData = async (id) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const headers = { Authorization: bearer };
-  const apiUrl = signApiUrl("/");
+  const apiUrl = signApiUrl("/" + id);
   const response = await get(apiUrl, headers);
   return response;
 };
