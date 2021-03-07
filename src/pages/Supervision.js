@@ -92,6 +92,7 @@ const Supervision = () => {
     const meetingResponse = await Api.supervision(globalState.userId);
     let supervisions = meetingResponse;
     supervisions = meetingResponse.data.filter((el) => {
+      console.log(!el.isDeleted)
       return !el.isDeleted;
     });
     setMyMeetings(supervisions);

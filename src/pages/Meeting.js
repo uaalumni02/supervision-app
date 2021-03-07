@@ -104,7 +104,7 @@ const Meeting = () => {
   const [attendeeId, setAttendeeId] = useState([]);
 
   const [meetingSuccess, setMeetingSuccess] = useState(false);
-
+  const [error, setError] = useState("");
   const { globalState, globalDispatch } = useContext(Context);
 
   const fetchSupervisionUnitData = async (event) => {
@@ -141,7 +141,11 @@ const Meeting = () => {
       supervisionType: supervisionTypeId,
       creator: globalState.userId,
     });
-    setMeetingSuccess(true);
+    if (meetingResponse.success) {
+      setMeetingSuccess(true);
+    } else {
+      setError(meetingResponse.message);
+    }
   };
 
   const classes = useStyles();
@@ -156,6 +160,7 @@ const Meeting = () => {
     >
       {meetingSuccess ? <Redirect to="/supervision/" /> : ""}
       <Grid item xs={12} md={12}>
+      <h3>{error}</h3>
         <Card className={classes.root} xs={12} md={6}>
           <CardContent>
             <Box display="flex" alignItems="center" justifyContent="center">
