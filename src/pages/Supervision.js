@@ -71,11 +71,15 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 300,
       color: "red",
     },
+    p: {
+      textAlign: "center"
+    }
   },
 }));
 const Supervision = () => {
   const classes = useStyles();
   const [myMeetings, setMyMeetings] = useState([]);
+  const [noMeetings, setNoMeetings] = useState("");
 
   const { globalState, globalDispatch } = useContext(Context);
 
@@ -92,10 +96,13 @@ const Supervision = () => {
     const meetingResponse = await Api.supervision(globalState.userId);
     let supervisions = meetingResponse;
     supervisions = meetingResponse.data.filter((el) => {
-      console.log(!el.isDeleted)
       return !el.isDeleted;
     });
     setMyMeetings(supervisions);
+
+    if (supervisions.length == 0) {
+      setNoMeetings("You have no supervisions");
+    }
 
     globalDispatch({
       type: "SET_SUPERVISION_DATA",
@@ -130,6 +137,16 @@ const Supervision = () => {
               fontSize="h5.fontSize"
             >
               <Typography variant="span">My Supervisions</Typography>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              mt={2}
+              fontWeight={300}
+              fontSize="h5.fontSize"
+            >
+            <Typography variant="span">{noMeetings}</Typography>
             </Box>
             <div className={classes.root}>
               <ul component="nav">
