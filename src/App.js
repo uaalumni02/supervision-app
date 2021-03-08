@@ -19,7 +19,7 @@ function App() {
   return (
     <GlobalStateProvider>
       <Layout>
-        <BrowserRouter>
+        <BrowserRouter basename={'/supervision-app/'}>
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
