@@ -7,41 +7,41 @@ const makeApiUrl = (path) => {
 };
 
 const supervisionApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/meeting${path}`;
+  return `${settings.apiBaseUrl}api/meeting${path}`;
 };
 const resetApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/reset`;
+  return `${settings.apiBaseUrl}api/reset`;
 };
 
 const resetPasswordApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/updatePassword${path}`;
+  return `${settings.apiBaseUrl}api/updatePassword${path}`;
 };
 
 const submitMeetingApiUrl = () => {
-  return `${settings.apiBaseUrl}/api/meeting`;
+  return `${settings.apiBaseUrl}api/meeting`;
 };
 
 const userApiUrl = () => {
-  return `${settings.apiBaseUrl}/api/user`;
+  return `${settings.apiBaseUrl}api/user`;
 };
 
 const meetingIdUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/meetingId${path}`;
+  return `${settings.apiBaseUrl}api/meetingId${path}`;
 };
 
 const signApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/approval`;
+  return `${settings.apiBaseUrl}api/approval`;
 };
 
 const deleteMeetingApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/meeting${path}`;
+  return `${settings.apiBaseUrl}api/meeting${path}`;
 };
 const supervisionUnitsApiUrl = () => {
-  return `${settings.apiBaseUrl}/api/supervisionUnits`;
+  return `${settings.apiBaseUrl}api/supervisionUnits`;
 };
 
 const editMeetingApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/meeting${path}`;
+  return `${settings.apiBaseUrl}api/meeting${path}`;
 };
 
 const login = async (username, password) => {
