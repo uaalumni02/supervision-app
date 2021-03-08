@@ -93,7 +93,7 @@ const Login = () => {
     if (globalState.isLoggedIn) {
       const userId = LocalStorage.get("user");
       globalDispatch({ type: "SET_LOGGEDIN_USER", payload: userId });
-      history.push("/supervision");
+      history.push("https://uaalumni02.github.io/supervision-app/supervision");
     }
   }, []);
 
