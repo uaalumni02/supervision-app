@@ -22,7 +22,7 @@ const submitMeetingApiUrl = () => {
 };
 
 const userApiUrl = () => {
-  return `${settings.apiBaseUrl}/api/user`;
+  return `${settings.apiBaseUrl}/api/user/`;
 };
 
 const meetingIdUrl = (path) => {
