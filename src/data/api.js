@@ -3,7 +3,7 @@ import { post, get, deleteMeeting, patchMeeting } from "../utils/fetch";
 import settings from "../config/configData";
 
 const makeApiUrl = (path) => {
-  return `${settings.apiBaseUrl}/api/user${path}/`;
+  return `${settings.apiBaseUrl}/api/user/`;
 };
 
 const supervisionApiUrl = (path) => {
