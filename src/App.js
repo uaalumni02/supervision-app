@@ -19,9 +19,9 @@ function App() {
   return (
     <GlobalStateProvider>
       <Layout>
-        <BrowserRouter basename={'/supervision-app/'}>
+        <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Login} />
+            <Route exact path="https://uaalumni02.github.io/supervision-app/" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/supervision" component={Supervision} />
             <Route exact path="/requestToken" component={RequestToken} />
