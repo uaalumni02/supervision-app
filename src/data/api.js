@@ -45,7 +45,7 @@ const editMeetingApiUrl = (path) => {
 };
 
 const login = async (username, password) => {
-  const apiUrl = makeApiUrl("/login");
+  const apiUrl = makeApiUrl("login");
   const response = await post(apiUrl, { username, password });
   return response;
 };
