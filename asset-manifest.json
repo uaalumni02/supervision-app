@@ -1,27 +1,27 @@
 {
   "files": {
     "main.css": "/supervision-app/static/css/main.c06f581a.chunk.css",
-    "main.js": "/supervision-app/static/js/main.7853e137.chunk.js",
-    "main.js.map": "/supervision-app/static/js/main.7853e137.chunk.js.map",
+    "main.js": "/supervision-app/static/js/main.817fe6b2.chunk.js",
+    "main.js.map": "/supervision-app/static/js/main.817fe6b2.chunk.js.map",
     "runtime-main.js": "/supervision-app/static/js/runtime-main.dc3712ad.js",
     "runtime-main.js.map": "/supervision-app/static/js/runtime-main.dc3712ad.js.map",
-    "static/css/2.316f8eed.chunk.css": "/supervision-app/static/css/2.316f8eed.chunk.css",
-    "static/js/2.bfc26ac4.chunk.js": "/supervision-app/static/js/2.bfc26ac4.chunk.js",
-    "static/js/2.bfc26ac4.chunk.js.map": "/supervision-app/static/js/2.bfc26ac4.chunk.js.map",
+    "static/css/2.1aeba588.chunk.css": "/supervision-app/static/css/2.1aeba588.chunk.css",
+    "static/js/2.4f2ffd79.chunk.js": "/supervision-app/static/js/2.4f2ffd79.chunk.js",
+    "static/js/2.4f2ffd79.chunk.js.map": "/supervision-app/static/js/2.4f2ffd79.chunk.js.map",
     "index.html": "/supervision-app/index.html",
-    "precache-manifest.1b652d29c54cfbf767f1a39786b0d008.js": "/supervision-app/precache-manifest.1b652d29c54cfbf767f1a39786b0d008.js",
+    "precache-manifest.6e54bf26b1a9f2163ca2d704684c7aa0.js": "/supervision-app/precache-manifest.6e54bf26b1a9f2163ca2d704684c7aa0.js",
     "service-worker.js": "/supervision-app/service-worker.js",
-    "static/css/2.316f8eed.chunk.css.map": "/supervision-app/static/css/2.316f8eed.chunk.css.map",
+    "static/css/2.1aeba588.chunk.css.map": "/supervision-app/static/css/2.1aeba588.chunk.css.map",
     "static/css/main.c06f581a.chunk.css.map": "/supervision-app/static/css/main.c06f581a.chunk.css.map",
-    "static/js/2.bfc26ac4.chunk.js.LICENSE.txt": "/supervision-app/static/js/2.bfc26ac4.chunk.js.LICENSE.txt",
+    "static/js/2.4f2ffd79.chunk.js.LICENSE.txt": "/supervision-app/static/js/2.4f2ffd79.chunk.js.LICENSE.txt",
     "static/media/mdb.css": "/supervision-app/static/media/arrow_right.8ef6a08c.svg",
     "static/media/avatar.png": "/supervision-app/static/media/avatar.3f28b642.png"
   },
   "entrypoints": [
     "static/js/runtime-main.dc3712ad.js",
-    "static/css/2.316f8eed.chunk.css",
-    "static/js/2.bfc26ac4.chunk.js",
+    "static/css/2.1aeba588.chunk.css",
+    "static/js/2.4f2ffd79.chunk.js",
     "static/css/main.c06f581a.chunk.css",
-    "static/js/main.7853e137.chunk.js"
+    "static/js/main.817fe6b2.chunk.js"
   ]
 }
