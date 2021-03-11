@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1cb6a562c7cd47f6f8a49eb6918ee56d",
+    "revision": "1cfcd75471e14a2e378d6f031b1fcf13",
     "url": "/supervision-app/index.html"
   },
   {
-    "revision": "4fb3651622e4cd087443",
+    "revision": "aad749899e64de985f43",
     "url": "/supervision-app/static/css/2.1aeba588.chunk.css"
   },
   {
-    "revision": "7fb3800f0a0071bd43b0",
+    "revision": "3797e197f3db0f651844",
     "url": "/supervision-app/static/css/main.c06f581a.chunk.css"
   },
   {
-    "revision": "4fb3651622e4cd087443",
-    "url": "/supervision-app/static/js/2.e92b1a60.chunk.js"
+    "revision": "aad749899e64de985f43",
+    "url": "/supervision-app/static/js/2.1f0208a5.chunk.js"
   },
   {
     "revision": "556d72da1c19c1e88e2917fa6505d7f0",
-    "url": "/supervision-app/static/js/2.e92b1a60.chunk.js.LICENSE.txt"
+    "url": "/supervision-app/static/js/2.1f0208a5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7fb3800f0a0071bd43b0",
-    "url": "/supervision-app/static/js/main.c8fb1377.chunk.js"
+    "revision": "3797e197f3db0f651844",
+    "url": "/supervision-app/static/js/main.5d97f858.chunk.js"
   },
   {
     "revision": "d9f97ec3d176d51ed870",
