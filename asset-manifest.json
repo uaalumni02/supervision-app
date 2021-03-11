@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/supervision-app/static/css/main.c06f581a.chunk.css",
-    "main.js": "/supervision-app/static/js/main.5113f9c0.chunk.js",
-    "main.js.map": "/supervision-app/static/js/main.5113f9c0.chunk.js.map",
+    "main.js": "/supervision-app/static/js/main.7853e137.chunk.js",
+    "main.js.map": "/supervision-app/static/js/main.7853e137.chunk.js.map",
     "runtime-main.js": "/supervision-app/static/js/runtime-main.dc3712ad.js",
     "runtime-main.js.map": "/supervision-app/static/js/runtime-main.dc3712ad.js.map",
     "static/css/2.316f8eed.chunk.css": "/supervision-app/static/css/2.316f8eed.chunk.css",
     "static/js/2.bfc26ac4.chunk.js": "/supervision-app/static/js/2.bfc26ac4.chunk.js",
     "static/js/2.bfc26ac4.chunk.js.map": "/supervision-app/static/js/2.bfc26ac4.chunk.js.map",
     "index.html": "/supervision-app/index.html",
-    "precache-manifest.80da8d9c1e6aa87e73673bbafeab2242.js": "/supervision-app/precache-manifest.80da8d9c1e6aa87e73673bbafeab2242.js",
+    "precache-manifest.1b652d29c54cfbf767f1a39786b0d008.js": "/supervision-app/precache-manifest.1b652d29c54cfbf767f1a39786b0d008.js",
     "service-worker.js": "/supervision-app/service-worker.js",
     "static/css/2.316f8eed.chunk.css.map": "/supervision-app/static/css/2.316f8eed.chunk.css.map",
     "static/css/main.c06f581a.chunk.css.map": "/supervision-app/static/css/main.c06f581a.chunk.css.map",
@@ -22,6 +22,6 @@
     "static/css/2.316f8eed.chunk.css",
     "static/js/2.bfc26ac4.chunk.js",
     "static/css/main.c06f581a.chunk.css",
-    "static/js/main.5113f9c0.chunk.js"
+    "static/js/main.7853e137.chunk.js"
   ]
 }
